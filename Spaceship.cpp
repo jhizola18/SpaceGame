@@ -1,7 +1,6 @@
 #include "Spaceship.h"
 
 
-
 Player_Ship::Player_Ship()
 {
 	gravity = 9.08f;
