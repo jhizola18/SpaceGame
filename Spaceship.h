@@ -9,10 +9,14 @@ private:
 
 public:
 	Player_Ship();
-
-	float velocity;
+	
+	float gravity;
 	float speed;
+	
 	void Draw();
 	void moveForward();
+	void gravityForward();
 	void moveBackward();
+	void gravityBackward();
+	void gravityReset();
 };

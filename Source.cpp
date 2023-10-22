@@ -6,7 +6,7 @@ int main()
 	const int width = 600;
 	const int height = 800;
 
-	Window window{width, height, 60, "SpaceGame"};
+	Window window{width, height, 74, "SpaceGame"};
 
 	Game game = Game();
 
