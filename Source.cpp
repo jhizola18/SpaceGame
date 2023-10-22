@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Game.h"
 
 int main()
 {
@@ -7,10 +8,14 @@ int main()
 
 	Window window{width, height, 60, "SpaceGame"};
 
+	Game game = Game();
+
 	while (!window.gameShouldClose())
 	{
+		game.userInput();
 		BeginDrawing();
 		ClearBackground(BLACK);
+		game.Draw();
 		EndDrawing();
 	}
 
