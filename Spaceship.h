@@ -10,13 +10,23 @@ private:
 public:
 	Player_Ship();
 	
-	float gravity;
+	float gravity_Y;
+	float gravity_X;
 	float speed;
 	
 	void Draw();
+
 	void moveForward();
 	void gravityForward();
+
 	void moveBackward();
 	void gravityBackward();
+
+	void moveLeft();
+	void gravityLeft();
+
+	void moveRight();
+	void gravityRight();
+
 	void gravityReset();
 };

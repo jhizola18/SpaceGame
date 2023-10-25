@@ -10,10 +10,10 @@ void Game::userInput()
 	{
 		ship.moveForward();
 		ship.gravityReset();
-	}
-	else {
+	}else {
 		ship.gravityForward();
 	}
+
 
 	if (IsKeyDown(KEY_S))
 	{
@@ -23,6 +23,30 @@ void Game::userInput()
 	else {
 		ship.gravityBackward();
 	}
+
+
+	if (IsKeyDown(KEY_A))
+	{
+		ship.moveLeft();
+		ship.gravityReset();
+		
+	}else {
+		ship.gravityLeft();
+	}
+	
+	
+	if (IsKeyDown(KEY_D))
+	{
+		ship.moveRight();
+		ship.gravityReset();
+		
+	}else {
+		ship.gravityRight();
+	}
+	
+	
+		
+	
 }
 
 void Game::Draw()
