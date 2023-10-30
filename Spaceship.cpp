@@ -3,12 +3,14 @@
 
 Player_Ship::Player_Ship()
 {
+	playerBullet = 15;
 	gravity_Y = 9.08f;
 	gravity_X = 0.0f;
 	point_Top = {300, 720};
 	point_Left = {280 , 750};
 	point_Right = {320, 750};
 	speed = 100.0f;
+	bullet[playerBullet] = { 300, 720, false };
 }
 
 void Player_Ship::Draw()

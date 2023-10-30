@@ -7,7 +7,21 @@ private:
 	Vector2 point_Left;
 	Vector2 point_Right;
 
+	int playerBullet;
+
+	struct Bullet {
+		float posX;
+		float posY;
+		
+		bool deadBullet = false;
+
+		Bullet* next;
+		Bullet* prev;
+	};
+
 public:
+	Bullet* bullet;
+
 	Player_Ship();
 	
 	float gravity_Y;
