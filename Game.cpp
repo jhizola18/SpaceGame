@@ -44,9 +44,10 @@ void Game::userInput()
 		ship.gravityRight();
 	}
 	
-	
-		
-	
+	if (IsKeyPressed(KEY_E))
+	{
+		ship.fireBullets();
+	}
 }
 
 void Game::Draw()

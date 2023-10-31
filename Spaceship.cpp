@@ -1,6 +1,8 @@
 #include "Spaceship.h"
 
 
+
+
 Player_Ship::Player_Ship()
 {
 	gravity_Y = 9.08f;
@@ -9,8 +11,11 @@ Player_Ship::Player_Ship()
 	point_Left = {280 , 750};
 	point_Right = {320, 750};
 	speed = 100.0f;
-	bullet = {};
+	firstBullet = nullptr;
+	lastBullet = nullptr;
 }
+
+
 
 void Player_Ship::Draw()
 {
@@ -113,3 +118,37 @@ void Player_Ship::gravityReset()
 	}
 
 }
+
+Player_Ship::Bullet* Player_Ship::NewBullet(float posX, float posY)
+{
+	if (firstBullet == nullptr)
+	{
+		firstBullet = new Bullet;
+		lastBullet = firstBullet;
+
+		lastBullet->next = nullptr;
+		lastBullet->prev = nullptr;
+	}
+	else {
+		lastBullet->next = new Bullet;
+		lastBullet->next->prev = lastBullet;
+
+		lastBullet = lastBullet->next;
+		lastBullet->next = nullptr;
+	}
+	lastBullet->rec = { point_Top.x, point_Top.y, 10, 10 };
+	lastBullet->color = BLUE;
+	lastBullet->posX = posX;
+	lastBullet->posY = posY;
+
+	lastBullet->deadBullet = false;
+
+	return lastBullet;
+}
+
+void Player_Ship::fireBullets()
+{
+	NewBullet(point_Top.x, point_Top.y);
+	DrawRectangle(lastBullet->rec.x, lastBullet->rec.y, lastBullet->rec.width, lastBullet->rec.height, lastBullet->color);
+}
+

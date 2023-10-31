@@ -11,17 +11,24 @@ private:
 		float posX;
 		float posY;
 		
-		bool deadBullet = false;
+		Rectangle rec;
+		Color color;
+
+		bool deadBullet;
 
 		Bullet* next;
 		Bullet* prev;
 	};
 
+	Bullet* firstBullet;//head
+	Bullet* lastBullet;//tail
+
+	Bullet* NewBullet(float posX, float posY);
+
 public:
-	Bullet* bullet;
 
 	Player_Ship();
-	
+
 	float gravity_Y;
 	float gravity_X;
 	float speed;
@@ -41,4 +48,7 @@ public:
 	void gravityRight();
 
 	void gravityReset();
+
+	void fireBullets();
+	
 };
