@@ -7,8 +7,6 @@ private:
 	Vector2 point_Left;
 	Vector2 point_Right;
 
-	int playerBullet;
-
 	struct Bullet {
 		float posX;
 		float posY;
