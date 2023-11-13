@@ -8,8 +8,6 @@ private:
 	Vector2 point_Right;
 
 	struct Bullet {
-		float posX;
-		float posY;
 		
 		Rectangle rec;
 		Color color;
@@ -24,6 +22,9 @@ private:
 	Bullet* lastBullet;//tail
 
 	Bullet* NewBullet(float posX, float posY);
+	
+
+	int clipSize;
 
 public:
 
@@ -49,6 +50,9 @@ public:
 
 	void gravityReset();
 
+	void renderBullets();
+	void updateBullets();
+	void reloadBullets();
 	void fireBullets();
 	
 };

@@ -13,9 +13,9 @@ Player_Ship::Player_Ship()
 	speed = 100.0f;
 	firstBullet = nullptr;
 	lastBullet = nullptr;
+	clipSize = 7;
+	renderBullets();
 }
-
-
 
 void Player_Ship::Draw()
 {
@@ -118,7 +118,8 @@ void Player_Ship::gravityReset()
 	}
 
 }
-
+//Using linked list to store new bullets when the player fired the bullet
+//the tail node will be called/return
 Player_Ship::Bullet* Player_Ship::NewBullet(float posX, float posY)
 {
 	if (firstBullet == nullptr)
@@ -136,19 +137,82 @@ Player_Ship::Bullet* Player_Ship::NewBullet(float posX, float posY)
 		lastBullet = lastBullet->next;
 		lastBullet->next = nullptr;
 	}
-	lastBullet->rec = { point_Top.x, point_Top.y, 10, 10 };
-	lastBullet->color = BLUE;
-	lastBullet->posX = posX;
-	lastBullet->posY = posY;
+	lastBullet->rec = { posX - (5/2), posY, 5, 20};
+	lastBullet->color = WHITE;
 
 	lastBullet->deadBullet = false;
 
 	return lastBullet;
 }
 
+void Player_Ship::reloadBullets()
+{
+	for (int i = 0; i < clipSize; ++i)
+	{
+		NewBullet(point_Top.x, point_Top.y);
+	}
+}
+
+void Player_Ship::updateBullets()
+{
+	Bullet* thisBullet = firstBullet;
+	
+	while (thisBullet->next != nullptr)
+	{
+		thisBullet = thisBullet->next;
+	}
+	thisBullet->rec.y -= 15;
+	if (thisBullet->rec.y > GetScreenHeight() || thisBullet->rec.y < 0)
+	{
+		thisBullet->deadBullet = true;
+	}
+	
+}
+
+void Player_Ship::renderBullets()
+{
+	reloadBullets();
+	Bullet* thisBullet = firstBullet;
+	Bullet* deadBullet = nullptr;
+
+	while (thisBullet != nullptr)
+	{
+		if (thisBullet->deadBullet)
+		{
+			deadBullet = thisBullet;
+			thisBullet = thisBullet->next;
+			if (firstBullet == deadBullet)
+			{
+				firstBullet = thisBullet;
+				if (thisBullet != nullptr)
+				{
+					thisBullet->prev = nullptr;
+				}else {
+					deadBullet->prev->next = thisBullet;
+					if (thisBullet != nullptr)
+					{
+						thisBullet->prev = deadBullet->prev;
+					}
+				}
+				if (lastBullet == deadBullet)
+				{
+					lastBullet = deadBullet->prev;
+				}
+				delete deadBullet;
+	
+			}
+		}
+		else {
+			DrawRectangle(lastBullet->rec.x, lastBullet->rec.y, lastBullet->rec.width, lastBullet->rec.height, lastBullet->color);
+			thisBullet = thisBullet->next;
+		}
+	}
+	
+}
+
 void Player_Ship::fireBullets()
 {
-	NewBullet(point_Top.x, point_Top.y);
-	DrawRectangle(lastBullet->rec.x, lastBullet->rec.y, lastBullet->rec.width, lastBullet->rec.height, lastBullet->color);
+	renderBullets();
+	updateBullets();
 }
 

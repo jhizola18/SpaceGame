@@ -46,8 +46,10 @@ void Game::userInput()
 	
 	if (IsKeyPressed(KEY_E))
 	{
+		ship.renderBullets();
 		ship.fireBullets();
 	}
+	
 }
 
 void Game::Draw()
