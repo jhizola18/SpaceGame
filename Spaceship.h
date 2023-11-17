@@ -9,10 +9,14 @@ private:
 
 	struct Bullet {
 		
-		Rectangle rec;
+		float posX;
+		float posY;
+		int data;
+
 		Color color;
 
 		bool deadBullet;
+		bool firedBullet;
 
 		Bullet* next;
 		Bullet* prev;
@@ -21,7 +25,7 @@ private:
 	Bullet* firstBullet;//head
 	Bullet* lastBullet;//tail
 
-	Bullet* NewBullet(float posX, float posY);
+	Bullet* NewBullet(Bullet* head, float posX, float posY, int data);
 	
 
 	int clipSize;

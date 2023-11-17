@@ -1,6 +1,5 @@
 #include "Spaceship.h"
-
-
+#include <iostream>
 
 
 Player_Ship::Player_Ship()
@@ -14,7 +13,7 @@ Player_Ship::Player_Ship()
 	firstBullet = nullptr;
 	lastBullet = nullptr;
 	clipSize = 7;
-	renderBullets();
+	reloadBullets();
 }
 
 void Player_Ship::Draw()
@@ -118,10 +117,10 @@ void Player_Ship::gravityReset()
 	}
 
 }
-//Using linked list to store new bullets when the player fired the bullet
-//the tail node will be called/return
-Player_Ship::Bullet* Player_Ship::NewBullet(float posX, float posY)
+
+Player_Ship::Bullet* Player_Ship::NewBullet(Bullet* firstBullet , float posX, float posY, int data)
 {
+
 	if (firstBullet == nullptr)
 	{
 		firstBullet = new Bullet;
@@ -137,82 +136,68 @@ Player_Ship::Bullet* Player_Ship::NewBullet(float posX, float posY)
 		lastBullet = lastBullet->next;
 		lastBullet->next = nullptr;
 	}
-	lastBullet->rec = { posX - (5/2), posY, 5, 20};
+	lastBullet->data = data;
+	lastBullet->posX = posX - (5 / 2);
+	lastBullet->posY = posY;
 	lastBullet->color = WHITE;
-
 	lastBullet->deadBullet = false;
-
-	return lastBullet;
+	lastBullet->firedBullet = false;
+	
+	return firstBullet;
 }
 
 void Player_Ship::reloadBullets()
 {
 	for (int i = 0; i < clipSize; ++i)
 	{
-		NewBullet(point_Top.x, point_Top.y);
+		firstBullet = NewBullet(firstBullet ,point_Top.x, point_Top.y,15);
+	}
+
+	for (int i = 0; i < clipSize; ++i)
+	{
+		std::cout << firstBullet->data << " ";
 	}
 }
-
+//Fix this
 void Player_Ship::updateBullets()
 {
+	
 	Bullet* thisBullet = firstBullet;
 	
-	while (thisBullet->next != nullptr)
+	while (thisBullet != nullptr)
 	{
-		thisBullet = thisBullet->next;
+		thisBullet->posY -= 2;
+		
+		if (thisBullet->posY < GetScreenHeight())
+		{
+			thisBullet->deadBullet = true;
+			thisBullet = thisBullet->next;
+		}
 	}
-	thisBullet->rec.y -= 15;
-	if (thisBullet->rec.y > GetScreenHeight() || thisBullet->rec.y < 0)
-	{
-		thisBullet->deadBullet = true;
-	}
-	
 }
 
 void Player_Ship::renderBullets()
 {
-	reloadBullets();
+	//firstBullet = NewBullet(firstBullet, point_Top.x, point_Top.y, 15);
 	Bullet* thisBullet = firstBullet;
 	Bullet* deadBullet = nullptr;
 
-	while (thisBullet != nullptr)
+	while (thisBullet->next != nullptr)
 	{
-		if (thisBullet->deadBullet)
-		{
-			deadBullet = thisBullet;
-			thisBullet = thisBullet->next;
-			if (firstBullet == deadBullet)
-			{
-				firstBullet = thisBullet;
-				if (thisBullet != nullptr)
-				{
-					thisBullet->prev = nullptr;
-				}else {
-					deadBullet->prev->next = thisBullet;
-					if (thisBullet != nullptr)
-					{
-						thisBullet->prev = deadBullet->prev;
-					}
-				}
-				if (lastBullet == deadBullet)
-				{
-					lastBullet = deadBullet->prev;
-				}
-				delete deadBullet;
-	
-			}
-		}
-		else {
-			DrawRectangle(lastBullet->rec.x, lastBullet->rec.y, lastBullet->rec.width, lastBullet->rec.height, lastBullet->color);
-			thisBullet = thisBullet->next;
-		}
+		thisBullet = thisBullet->next;
+		
 	}
-	
+	DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, lastBullet->color);
+	if (lastBullet->deadBullet == true)
+	{
+		deadBullet = lastBullet;
+		lastBullet->prev->next = nullptr;
+	}
+	delete deadBullet;
 }
 
 void Player_Ship::fireBullets()
 {
-	renderBullets();
 	updateBullets();
 }
 
