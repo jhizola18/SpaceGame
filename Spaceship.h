@@ -58,5 +58,6 @@ public:
 	void updateBullets();
 	void reloadBullets();
 	void fireBullets();
+	void initialBullet();
 	
 };

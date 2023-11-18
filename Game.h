@@ -9,5 +9,4 @@ public:
 	Game();
 	void userInput();
 	void Draw();
-	void gunFiring();
 };

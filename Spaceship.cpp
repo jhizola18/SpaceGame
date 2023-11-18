@@ -153,22 +153,18 @@ void Player_Ship::reloadBullets()
 		firstBullet = NewBullet(firstBullet ,point_Top.x, point_Top.y,15);
 	}
 
-	for (int i = 0; i < clipSize; ++i)
-	{
-		std::cout << firstBullet->data << " ";
-	}
+	
 }
-//Fix this
+//put a velocity parameter here!!!!
 void Player_Ship::updateBullets()
 {
-	
 	Bullet* thisBullet = firstBullet;
 	
 	while (thisBullet != nullptr)
 	{
-		thisBullet->posY -= 2;
+		thisBullet->posY -= 10;
 		
-		if (thisBullet->posY < GetScreenHeight())
+		if (thisBullet->posY <= GetScreenHeight())
 		{
 			thisBullet->deadBullet = true;
 			thisBullet = thisBullet->next;
@@ -176,6 +172,7 @@ void Player_Ship::updateBullets()
 	}
 }
 
+//fix this so that it can render individual Rectangle
 void Player_Ship::renderBullets()
 {
 	//firstBullet = NewBullet(firstBullet, point_Top.x, point_Top.y, 15);
@@ -185,15 +182,30 @@ void Player_Ship::renderBullets()
 	while (thisBullet->next != nullptr)
 	{
 		thisBullet = thisBullet->next;
-		
 	}
-	DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, lastBullet->color);
+	
 	if (lastBullet->deadBullet == true)
 	{
 		deadBullet = lastBullet;
 		lastBullet->prev->next = nullptr;
+		delete deadBullet;
 	}
-	delete deadBullet;
+	else {
+		DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, lastBullet->color);
+		thisBullet = thisBullet->next;
+	}
+	
+}
+
+void Player_Ship::initialBullet()
+{
+	Bullet* thisBullet = firstBullet;
+
+	while (thisBullet != nullptr)
+	{
+		thisBullet->posY -= 15;
+		thisBullet = thisBullet->next;
+	}
 }
 
 void Player_Ship::fireBullets()

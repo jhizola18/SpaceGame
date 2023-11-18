@@ -2,7 +2,6 @@
 
 Game::Game()
 {
-	
 }
 
 void Game::userInput()
@@ -45,22 +44,18 @@ void Game::userInput()
 		ship.gravityRight();
 	}
 	
-	if (IsKeyPressed(KEY_E))
+	if (IsKeyReleased(KEY_E))
 	{
-		ship.renderBullets();
+		ship.initialBullet();
 	}
 	else {
-		gunFiring();
+		ship.fireBullets();
 	}
-	
 }
 
-void Game::gunFiring()
-{
-	ship.fireBullets();
-}
 
 void Game::Draw()
 {
+	ship.renderBullets();
 	ship.Draw();
 }
