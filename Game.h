@@ -9,4 +9,8 @@ public:
 	Game();
 	void userInput();
 	void Draw();
+
+	int velocity;
+	float positionX;
+	float positionY;
 };

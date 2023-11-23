@@ -16,6 +16,11 @@ Player_Ship::Player_Ship()
 	reloadBullets();
 }
 
+Vector2 Player_Ship::getPointTop()
+{
+	return point_Top;
+}
+
 void Player_Ship::Draw()
 {
 	//counterclockwise
@@ -118,9 +123,9 @@ void Player_Ship::gravityReset()
 
 }
 
-Player_Ship::Bullet* Player_Ship::NewBullet(Bullet* firstBullet , float posX, float posY, int data)
+Player_Ship::Bullet* Player_Ship::NewBullet(Bullet* lastBullet , float pos_X, float pos_Y)
 {
-
+	
 	if (firstBullet == nullptr)
 	{
 		firstBullet = new Bullet;
@@ -136,35 +141,37 @@ Player_Ship::Bullet* Player_Ship::NewBullet(Bullet* firstBullet , float posX, fl
 		lastBullet = lastBullet->next;
 		lastBullet->next = nullptr;
 	}
-	lastBullet->data = data;
-	lastBullet->posX = posX - (5 / 2);
-	lastBullet->posY = posY;
+	
+	lastBullet->posX = pos_X - (5 / 2);
+	lastBullet->posY = pos_Y;
 	lastBullet->color = WHITE;
 	lastBullet->deadBullet = false;
 	lastBullet->firedBullet = false;
 	
-	return firstBullet;
+	return lastBullet;
 }
+
 
 void Player_Ship::reloadBullets()
 {
 	for (int i = 0; i < clipSize; ++i)
 	{
-		firstBullet = NewBullet(firstBullet ,point_Top.x, point_Top.y,15);
+		lastBullet = NewBullet(lastBullet, point_Top.x, point_Top.y);
 	}
-
-	
 }
+
 //put a velocity parameter here!!!!
-void Player_Ship::updateBullets()
+//fix this so that it moves and fits to a new functions
+void Player_Ship::updateBullets(float velocity, float pos_Y)
 {
 	Bullet* thisBullet = firstBullet;
 	
 	while (thisBullet != nullptr)
 	{
-		thisBullet->posY -= 10;
+		thisBullet->posY -= velocity;
+		pos_Y -= thisBullet->posY;
 		
-		if (thisBullet->posY <= GetScreenHeight())
+		if (thisBullet->posY < GetScreenHeight())
 		{
 			thisBullet->deadBullet = true;
 			thisBullet = thisBullet->next;
@@ -173,43 +180,55 @@ void Player_Ship::updateBullets()
 }
 
 //fix this so that it can render individual Rectangle
-void Player_Ship::renderBullets()
+void Player_Ship::renderBullets(int posX, int posY)
 {
 	//firstBullet = NewBullet(firstBullet, point_Top.x, point_Top.y, 15);
 	Bullet* thisBullet = firstBullet;
 	Bullet* deadBullet = nullptr;
 
-	while (thisBullet->next != nullptr)
-	{
-		thisBullet = thisBullet->next;
-	}
-	
-	if (lastBullet->deadBullet == true)
-	{
-		deadBullet = lastBullet;
-		lastBullet->prev->next = nullptr;
-		delete deadBullet;
-	}
-	else {
-		DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, lastBullet->color);
-		thisBullet = thisBullet->next;
-	}
-	
-}
-
-void Player_Ship::initialBullet()
-{
-	Bullet* thisBullet = firstBullet;
-
 	while (thisBullet != nullptr)
 	{
-		thisBullet->posY -= 15;
-		thisBullet = thisBullet->next;
-	}
+		/*if (thisBullet->deadBullet == true)
+		{
+			deadBullet = thisBullet;
+			thisBullet = thisBullet->next;
+			if (firstBullet == deadBullet)
+			{
+				firstBullet = thisBullet;
+				if (thisBullet != nullptr)
+				{
+					thisBullet->prev = nullptr;
+				}
+			}else {
+				deadBullet->prev->next = thisBullet;
+				if (thisBullet != nullptr)
+				{
+					thisBullet->prev = deadBullet->prev;
+				}
+			}
+			if (lastBullet == deadBullet)
+			{
+				lastBullet = deadBullet->prev;
+			}
+			delete deadBullet;
+		}
+		else {*/
+		
+
+			//Draw in a way that the bullet adjust to where the ship
+			DrawRectangle(posX, posY,  5, 20 , thisBullet->color);
+			thisBullet = thisBullet->next;
+		}
+	
 }
 
-void Player_Ship::fireBullets()
+float Player_Ship::getVelocity()
 {
-	updateBullets();
+	return 5.0f;
+}
+
+void Player_Ship::fireBullets(float velocity, float posY)
+{
+	updateBullets(velocity, posY);
 }
 

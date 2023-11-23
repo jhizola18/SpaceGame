@@ -11,7 +11,6 @@ private:
 		
 		float posX;
 		float posY;
-		int data;
 
 		Color color;
 
@@ -25,12 +24,13 @@ private:
 	Bullet* firstBullet;//head
 	Bullet* lastBullet;//tail
 
-	Bullet* NewBullet(Bullet* head, float posX, float posY, int data);
-	
+	Bullet* NewBullet(Bullet* head, float pos_X, float pos_Y);
 
 	int clipSize;
 
 public:
+
+	Vector2 getPointTop();
 
 	Player_Ship();
 
@@ -54,10 +54,10 @@ public:
 
 	void gravityReset();
 
-	void renderBullets();
-	void updateBullets();
+	void renderBullets(int posX,int posY);
+	void updateBullets(float velocity, float posY);
 	void reloadBullets();
-	void fireBullets();
-	void initialBullet();
+	void fireBullets(float velocity, float posY);
 	
+	float getVelocity();
 };
