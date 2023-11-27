@@ -11,6 +11,6 @@ public:
 	void Draw();
 
 	int velocity;
-	float positionX;
-	float positionY;
+	int positionX;
+	int positionY;
 };

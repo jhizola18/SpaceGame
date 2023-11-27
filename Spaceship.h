@@ -9,6 +9,7 @@ private:
 
 	struct Bullet {
 		
+		int data;
 		float posX;
 		float posY;
 
@@ -24,7 +25,7 @@ private:
 	Bullet* firstBullet;//head
 	Bullet* lastBullet;//tail
 
-	Bullet* NewBullet(Bullet* head, float pos_X, float pos_Y);
+	Bullet* NewBullet();
 
 	int clipSize;
 
@@ -54,10 +55,11 @@ public:
 
 	void gravityReset();
 
-	void renderBullets(int posX,int posY);
-	void updateBullets(float velocity, float posY);
+	void renderBullets(int posY, int posX);
+	void updateBullets(float velocity, int posY);
 	void reloadBullets();
-	void fireBullets(float velocity, float posY);
-	
+	void fireBullets(float velocity, int posY);
+	void storeBullets();
+
 	float getVelocity();
 };

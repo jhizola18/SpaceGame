@@ -122,67 +122,66 @@ void Player_Ship::gravityReset()
 	}
 
 }
-
-Player_Ship::Bullet* Player_Ship::NewBullet(Bullet* lastBullet , float pos_X, float pos_Y)
+//stop pre determining the position of where the bullets stored
+Player_Ship::Bullet* Player_Ship::NewBullet()
 {
-	
-	if (firstBullet == nullptr)
-	{
-		firstBullet = new Bullet;
-		lastBullet = firstBullet;
+	Bullet* thisBullet = new Bullet();
+	thisBullet->data = 15;
+	thisBullet->posX = NULL;
+	thisBullet->posY = NULL;
+	thisBullet->deadBullet = false;
+	thisBullet->firedBullet = false;
+	thisBullet->next = nullptr;
+	thisBullet->prev = nullptr;
+	thisBullet->color = WHITE;
 
-		lastBullet->next = nullptr;
-		lastBullet->prev = nullptr;
-	}
-	else {
-		lastBullet->next = new Bullet;
-		lastBullet->next->prev = lastBullet;
-
-		lastBullet = lastBullet->next;
-		lastBullet->next = nullptr;
-	}
-	
-	lastBullet->posX = pos_X - (5 / 2);
-	lastBullet->posY = pos_Y;
-	lastBullet->color = WHITE;
-	lastBullet->deadBullet = false;
-	lastBullet->firedBullet = false;
-	
-	return lastBullet;
+	return thisBullet;
 }
 
+void Player_Ship::storeBullets()
+{
+	Bullet* thisBullet = NewBullet();
+	thisBullet->next = firstBullet;
+	thisBullet->prev = nullptr;
+	firstBullet = thisBullet;
+	//find use for the tail
+	lastBullet = firstBullet;
+	
+}
 
 void Player_Ship::reloadBullets()
 {
 	for (int i = 0; i < clipSize; ++i)
 	{
-		lastBullet = NewBullet(lastBullet, point_Top.x, point_Top.y);
+		storeBullets();
+	}
+	Bullet* thisBullet = firstBullet;
+	for (int i = 0; i < clipSize; ++i)
+	{
+		std::cout << thisBullet->data << " ";
 	}
 }
 
-//put a velocity parameter here!!!!
-//fix this so that it moves and fits to a new functions
-void Player_Ship::updateBullets(float velocity, float pos_Y)
+//fix this so that it moves and fits to the whole system code
+void Player_Ship::updateBullets(float velocity, int posY)
 {
 	Bullet* thisBullet = firstBullet;
 	
-	while (thisBullet != nullptr)
-	{
+	/*while (thisBullet != nullptr)*/
+	
 		thisBullet->posY -= velocity;
-		pos_Y -= thisBullet->posY;
-		
 		if (thisBullet->posY < GetScreenHeight())
 		{
 			thisBullet->deadBullet = true;
-			thisBullet = thisBullet->next;
+			
 		}
-	}
+		thisBullet = thisBullet->next;
 }
 
-//fix this so that it can render individual Rectangle
-void Player_Ship::renderBullets(int posX, int posY)
+
+
+void Player_Ship::renderBullets(int posY, int posX)
 {
-	//firstBullet = NewBullet(firstBullet, point_Top.x, point_Top.y, 15);
 	Bullet* thisBullet = firstBullet;
 	Bullet* deadBullet = nullptr;
 
@@ -213,10 +212,11 @@ void Player_Ship::renderBullets(int posX, int posY)
 			delete deadBullet;
 		}
 		else {*/
-		
-
+			//try to put a variable that will reset the value of the position Y
+			//fix the spawning of the bullets;
 			//Draw in a way that the bullet adjust to where the ship
-			DrawRectangle(posX, posY,  5, 20 , thisBullet->color);
+			
+			DrawRectangle(posX, posY, 5, 20, thisBullet->color);
 			thisBullet = thisBullet->next;
 		}
 	
@@ -227,7 +227,7 @@ float Player_Ship::getVelocity()
 	return 5.0f;
 }
 
-void Player_Ship::fireBullets(float velocity, float posY)
+void Player_Ship::fireBullets(float velocity, int posY)
 {
 	updateBullets(velocity, posY);
 }
