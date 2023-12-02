@@ -10,8 +10,10 @@ private:
 	struct Bullet {
 		
 		int data;
-		float posX;
-		float posY;
+		int posX;
+		int posY;
+
+		//int damage;
 
 		Color color;
 

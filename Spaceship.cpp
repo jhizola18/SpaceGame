@@ -125,10 +125,11 @@ void Player_Ship::gravityReset()
 //stop pre determining the position of where the bullets stored
 Player_Ship::Bullet* Player_Ship::NewBullet()
 {
+	//find a way to store or change the value of both position dynamically
 	Bullet* thisBullet = new Bullet();
 	thisBullet->data = 15;
-	thisBullet->posX = NULL;
-	thisBullet->posY = NULL;
+	thisBullet->posX = point_Top.x;
+	thisBullet->posY = point_Top.y;
 	thisBullet->deadBullet = false;
 	thisBullet->firedBullet = false;
 	thisBullet->next = nullptr;
@@ -144,9 +145,17 @@ void Player_Ship::storeBullets()
 	thisBullet->next = firstBullet;
 	thisBullet->prev = nullptr;
 	firstBullet = thisBullet;
-	//find use for the tail
-	lastBullet = firstBullet;
-	
+	if (firstBullet->next != nullptr)
+	{
+		Bullet* temptrBullet = firstBullet;
+		while (temptrBullet->next != nullptr)
+		{
+			temptrBullet = temptrBullet->next;
+		}
+		temptrBullet->next = thisBullet;
+		thisBullet->prev = temptrBullet;
+		thisBullet->next = nullptr;
+	}
 }
 
 void Player_Ship::reloadBullets()
@@ -155,27 +164,24 @@ void Player_Ship::reloadBullets()
 	{
 		storeBullets();
 	}
-	Bullet* thisBullet = firstBullet;
-	for (int i = 0; i < clipSize; ++i)
-	{
-		std::cout << thisBullet->data << " ";
-	}
 }
 
-//fix this so that it moves and fits to the whole system code
+
 void Player_Ship::updateBullets(float velocity, int posY)
 {
 	Bullet* thisBullet = firstBullet;
-	
-	/*while (thisBullet != nullptr)*/
-	
+
+	while (thisBullet != nullptr)
+	{
 		thisBullet->posY -= velocity;
-		if (thisBullet->posY < GetScreenHeight())
+
+		if (posY < GetScreenHeight())
 		{
 			thisBullet->deadBullet = true;
-			
+			thisBullet->firedBullet = true;
 		}
 		thisBullet = thisBullet->next;
+	}
 }
 
 
@@ -215,9 +221,12 @@ void Player_Ship::renderBullets(int posY, int posX)
 			//try to put a variable that will reset the value of the position Y
 			//fix the spawning of the bullets;
 			//Draw in a way that the bullet adjust to where the ship
-			
-			DrawRectangle(posX, posY, 5, 20, thisBullet->color);
-			thisBullet = thisBullet->next;
+				
+			DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, thisBullet->color);
+			if (thisBullet->firedBullet == true)
+			{
+				thisBullet = thisBullet->next;
+			}
 		}
 	
 }

@@ -3,6 +3,9 @@
 Game::Game()
 {
 	velocity = 0;
+	positionX = ship.getPointTop().x;
+	positionY = ship.getPointTop().y;
+	keyPressed = false;
 }
 
 void Game::userInput()
@@ -45,27 +48,38 @@ void Game::userInput()
 		ship.gravityRight();
 	}
 	
+	
 	if (IsKeyPressed(KEY_E))
 	{
 		velocity = ship.getVelocity();
 		positionY = ship.getPointTop().y;
+		keyPressed = true;
+		
 	}
-	else {
-		ship.fireBullets(velocity, positionY);
+	
+	if (keyPressed)
+	{
+			ship.fireBullets(ship.getVelocity(), ship.getPointTop().y);
 	}
+
 }
 
 
 void Game::Draw()
 {
+	
 	if (IsKeyPressed(KEY_E))
 	{
-		positionY = ship.getPointTop().y;
+		keyPressed = true;
 		positionX = ship.getPointTop().x;
+		positionY = ship.getPointTop().y;
 	}
-	else {
-		ship.renderBullets(positionY, positionX);
+	if (keyPressed)
+	{
+		ship.renderBullets( positionY, positionX );
 	}
-	//positionY = 0;
+	
+
+	
 	ship.Draw();
 }

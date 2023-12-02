@@ -4,7 +4,7 @@
 class Game {
 private:
 	Player_Ship ship = Player_Ship();
-
+	bool keyPressed;
 public:
 	Game();
 	void userInput();
@@ -13,4 +13,6 @@ public:
 	int velocity;
 	int positionX;
 	int positionY;
+
+	
 };
