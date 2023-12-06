@@ -57,10 +57,10 @@ public:
 
 	void gravityReset();
 
-	void renderBullets(int posY, int posX);
-	void updateBullets(float velocity, int posY);
+	void renderBullets();
+	void updateBullets(float velocity, int posY, int posX);
 	void reloadBullets();
-	void fireBullets(float velocity, int posY);
+	void fireBullets(float velocity, int posY, int posX);
 	void storeBullets();
 
 	float getVelocity();

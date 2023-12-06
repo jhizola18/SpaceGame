@@ -128,8 +128,8 @@ Player_Ship::Bullet* Player_Ship::NewBullet()
 	//find a way to store or change the value of both position dynamically
 	Bullet* thisBullet = new Bullet();
 	thisBullet->data = 15;
-	thisBullet->posX = point_Top.x;
-	thisBullet->posY = point_Top.y;
+	thisBullet->posX = 0;
+	thisBullet->posY = 0;
 	thisBullet->deadBullet = false;
 	thisBullet->firedBullet = false;
 	thisBullet->next = nullptr;
@@ -166,34 +166,66 @@ void Player_Ship::reloadBullets()
 	}
 }
 
-
-void Player_Ship::updateBullets(float velocity, int posY)
+//updating the speed of the bullets and position 
+//updating if the bullet has been fired
+void Player_Ship::updateBullets(float velocity, int posY, int posX)
 {
 	Bullet* thisBullet = firstBullet;
 
 	while (thisBullet != nullptr)
 	{
-		thisBullet->posY -= velocity;
+		if (thisBullet->posX == 0 && thisBullet->posY == 0)
+		{
+			thisBullet->posY = posY;
+			thisBullet->posX = posX;
+		}
 
-		if (posY < GetScreenHeight())
+		thisBullet->posY -= velocity;
+		thisBullet->firedBullet = true;
+		/*if (thisBullet->posY < 0)
 		{
 			thisBullet->deadBullet = true;
 			thisBullet->firedBullet = true;
-		}
+		}*/
+		
 		thisBullet = thisBullet->next;
 	}
 }
 
-
-
-void Player_Ship::renderBullets(int posY, int posX)
+//try to spawn multiple individual bullets 
+void Player_Ship::renderBullets()
 {
 	Bullet* thisBullet = firstBullet;
 	Bullet* deadBullet = nullptr;
 
 	while (thisBullet != nullptr)
 	{
-		/*if (thisBullet->deadBullet == true)
+		DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, thisBullet->color);
+		if (thisBullet->firedBullet == true)
+		{
+			thisBullet = thisBullet->next;
+		}
+		
+			//try to put a variable that will reset the value of the position Y
+			//fix the spawning of the bullets;
+			//Draw in a way that the bullet adjust to where the ship
+			//thisBullet->posX = point_Top.x;
+	}
+	
+}
+
+float Player_Ship::getVelocity()
+{
+	return 5.0f;
+}
+
+void Player_Ship::fireBullets(float velocity, int posY, int posX)
+{
+	updateBullets(velocity, posY, posX);
+}
+
+
+/*if (thisBullet->deadBullet == true)
 		{
 			deadBullet = thisBullet;
 			thisBullet = thisBullet->next;
@@ -218,26 +250,3 @@ void Player_Ship::renderBullets(int posY, int posX)
 			delete deadBullet;
 		}
 		else {*/
-			//try to put a variable that will reset the value of the position Y
-			//fix the spawning of the bullets;
-			//Draw in a way that the bullet adjust to where the ship
-				
-			DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, thisBullet->color);
-			if (thisBullet->firedBullet == true)
-			{
-				thisBullet = thisBullet->next;
-			}
-		}
-	
-}
-
-float Player_Ship::getVelocity()
-{
-	return 5.0f;
-}
-
-void Player_Ship::fireBullets(float velocity, int posY)
-{
-	updateBullets(velocity, posY);
-}
-

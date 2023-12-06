@@ -53,13 +53,14 @@ void Game::userInput()
 	{
 		velocity = ship.getVelocity();
 		positionY = ship.getPointTop().y;
+		positionX = ship.getPointTop().x;
 		keyPressed = true;
 		
 	}
 	
 	if (keyPressed)
 	{
-			ship.fireBullets(ship.getVelocity(), ship.getPointTop().y);
+			ship.fireBullets(ship.getVelocity(), positionY, positionX);
 	}
 
 }
@@ -71,12 +72,11 @@ void Game::Draw()
 	if (IsKeyPressed(KEY_E))
 	{
 		keyPressed = true;
-		positionX = ship.getPointTop().x;
-		positionY = ship.getPointTop().y;
+		
 	}
 	if (keyPressed)
 	{
-		ship.renderBullets( positionY, positionX );
+		ship.renderBullets();
 	}
 	
 
