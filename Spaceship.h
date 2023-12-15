@@ -62,6 +62,8 @@ public:
 	void reloadBullets();
 	void fireBullets(float velocity, int posY, int posX);
 	void storeBullets();
+	void deleteBullet();
+	void checkingStruct();
 
 	float getVelocity();
 };

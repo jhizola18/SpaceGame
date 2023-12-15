@@ -101,25 +101,24 @@ void Player_Ship::gravityRight()
 
 void Player_Ship::gravityReset()
 {
-	if (IsKeyPressed(KEY_W))
-	{
+	int Pressed = GetKeyPressed();
+	switch(Pressed){
+	case KEY_W:
 		gravity_Y = 9.08f;
-	}
-
-	if (IsKeyPressed(KEY_S))
-	{
+		break;
+	case KEY_S:
 		gravity_Y = -9.08f;
-	}
-
-	if (IsKeyPressed(KEY_A))
-	{
+		break;
+	case KEY_A:
 		gravity_X = -9.08f;
-	}
-
-	if (IsKeyPressed(KEY_D))
-	{
+		break;
+	case KEY_D:
 		gravity_X = 9.08f;
+		break;
+	default:
+		break;
 	}
+	
 
 }
 //stop pre determining the position of where the bullets stored
@@ -128,8 +127,8 @@ Player_Ship::Bullet* Player_Ship::NewBullet()
 	//find a way to store or change the value of both position dynamically
 	Bullet* thisBullet = new Bullet();
 	thisBullet->data = 15;
-	thisBullet->posX = 0;
-	thisBullet->posY = 0;
+	thisBullet->posX = NULL;
+	thisBullet->posY = NULL;
 	thisBullet->deadBullet = false;
 	thisBullet->firedBullet = false;
 	thisBullet->next = nullptr;
@@ -142,19 +141,33 @@ Player_Ship::Bullet* Player_Ship::NewBullet()
 void Player_Ship::storeBullets()
 {
 	Bullet* thisBullet = NewBullet();
-	thisBullet->next = firstBullet;
-	thisBullet->prev = nullptr;
-	firstBullet = thisBullet;
-	if (firstBullet->next != nullptr)
+	if (firstBullet == nullptr)
 	{
-		Bullet* temptrBullet = firstBullet;
-		while (temptrBullet->next != nullptr)
+		thisBullet->next = firstBullet;
+		firstBullet = thisBullet;
+		lastBullet = firstBullet;
+	}
+	else {
+		Bullet* tracker = firstBullet;
+		while (tracker->next != nullptr)
 		{
-			temptrBullet = temptrBullet->next;
+			tracker = tracker->next;
 		}
-		temptrBullet->next = thisBullet;
-		thisBullet->prev = temptrBullet;
-		thisBullet->next = nullptr;
+		lastBullet = thisBullet;
+		lastBullet->prev = tracker;
+		tracker->next = lastBullet;
+	}
+}
+
+
+
+void Player_Ship::checkingStruct()
+{
+	Bullet* thisBullet = lastBullet;
+	while (thisBullet != nullptr)
+	{
+		std::cout << thisBullet->data << " ";
+		thisBullet = thisBullet->prev;
 	}
 }
 
@@ -164,55 +177,66 @@ void Player_Ship::reloadBullets()
 	{
 		storeBullets();
 	}
+
+	Bullet* thisBullet = lastBullet;
+	
+	while (thisBullet != nullptr)
+	{
+		std::cout << thisBullet->data << " ";
+		thisBullet = thisBullet->prev;
+	}
 }
 
 //updating the speed of the bullets and position 
 //updating if the bullet has been fired
 void Player_Ship::updateBullets(float velocity, int posY, int posX)
 {
+	//find a way to fire only when the fire button is clicked
 	Bullet* thisBullet = firstBullet;
 
-	while (thisBullet != nullptr)
+	while (thisBullet != lastBullet->next)
 	{
-		if (thisBullet->posX == 0 && thisBullet->posY == 0)
-		{
-			thisBullet->posY = posY;
-			thisBullet->posX = posX;
-		}
-
-		thisBullet->posY -= velocity;
-		thisBullet->firedBullet = true;
-		/*if (thisBullet->posY < 0)
-		{
-			thisBullet->deadBullet = true;
-			thisBullet->firedBullet = true;
-		}*/
-		
 		thisBullet = thisBullet->next;
 	}
+	if (lastBullet->posX == NULL && lastBullet->posY == NULL)
+	{
+		lastBullet->posY = posY;
+		lastBullet->posX = posX;
+
+	}
+	lastBullet->data = 1;
+	lastBullet->posY -= velocity;
+	if (lastBullet->posY < 0)
+	{
+		lastBullet->deadBullet = true;
+	}
 }
+	
 
 //try to spawn multiple individual bullets 
+// try to put a logic here that bullet can many spawn not just one
 void Player_Ship::renderBullets()
 {
 	Bullet* thisBullet = firstBullet;
-	Bullet* deadBullet = nullptr;
-
-	while (thisBullet != nullptr)
+	while (thisBullet->next != lastBullet->next)
 	{
-		DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, thisBullet->color);
-		if (thisBullet->firedBullet == true)
-		{
-			thisBullet = thisBullet->next;
-		}
-		
-			//try to put a variable that will reset the value of the position Y
-			//fix the spawning of the bullets;
-			//Draw in a way that the bullet adjust to where the ship
-			//thisBullet->posX = point_Top.x;
+		thisBullet = thisBullet->next;
 	}
-	
+	DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, thisBullet->color);
+	if (lastBullet->deadBullet == true)
+	{
+		deleteBullet();
+	}
 }
+	
+void Player_Ship::deleteBullet()
+{
+	Bullet* deadBullet;
+	lastBullet = lastBullet->prev;
+	deadBullet = lastBullet->next;
+	delete deadBullet;
+}
+
 
 float Player_Ship::getVelocity()
 {
@@ -224,8 +248,10 @@ void Player_Ship::fireBullets(float velocity, int posY, int posX)
 	updateBullets(velocity, posY, posX);
 }
 
-
-/*if (thisBullet->deadBullet == true)
+//pseudocode for delete and rendering bullets;
+/*	while (thisBullet != nullptr)
+	{
+		if (thisBullet->deadBullet == true)
 		{
 			deadBullet = thisBullet;
 			thisBullet = thisBullet->next;
@@ -236,7 +262,8 @@ void Player_Ship::fireBullets(float velocity, int posY, int posX)
 				{
 					thisBullet->prev = nullptr;
 				}
-			}else {
+			}
+			else {
 				deadBullet->prev->next = thisBullet;
 				if (thisBullet != nullptr)
 				{
@@ -249,4 +276,31 @@ void Player_Ship::fireBullets(float velocity, int posY, int posX)
 			}
 			delete deadBullet;
 		}
-		else {*/
+		else {
+			DrawRectangle(thisBullet->posX, thisBullet->posY, 5, 20, thisBullet->color);
+			thisBullet = thisBullet->next;
+		}
+		
+	}*/
+
+//old control for adding gravity after movement
+	/*if (IsKeyPressed(KEY_W))
+		{
+			gravity_Y = 9.08f;
+		}
+
+		if (IsKeyPressed(KEY_S))
+		{
+			gravity_Y = -9.08f;
+		}
+
+		if (IsKeyPressed(KEY_A))
+		{
+			gravity_X = -9.08f;
+		}
+
+		if (IsKeyPressed(KEY_D))
+		{
+			gravity_X = 9.08f;
+		}*/
+
