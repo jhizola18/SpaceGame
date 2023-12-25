@@ -1,6 +1,9 @@
 #pragma once
 #include "raylib.h"
 
+
+
+
 class Player_Ship {
 private:
 	Vector2 point_Top;
@@ -8,17 +11,12 @@ private:
 	Vector2 point_Right;
 
 	struct Bullet {
-		
+		Rectangle rec;
+		int bulletSpeed;
 		int data;
-		int posX;
-		int posY;
-
 		//int damage;
 
 		Color color;
-
-		bool deadBullet;
-		bool firedBullet;
 
 		Bullet* next;
 		Bullet* prev;
@@ -26,21 +24,23 @@ private:
 
 	Bullet* firstBullet;//head
 	Bullet* lastBullet;//tail
+	Bullet* thisBullet;
+	Bullet* deadBullet;
 
 	Bullet* NewBullet();
 
+	int bulletVelocity;
 	int clipSize;
-
-public:
-
-	Vector2 getPointTop();
-
-	Player_Ship();
-
 	float gravity_Y;
 	float gravity_X;
 	float speed;
+	void storeBullets();
 	
+public:
+	
+	Vector2 getPointTop();
+
+	Player_Ship();
 	void Draw();
 
 	void moveForward();
@@ -54,16 +54,16 @@ public:
 
 	void moveRight();
 	void gravityRight();
-
 	void gravityReset();
 
+	
+	void updateBullets(/*float velocity,*/ int posY, int posX);
+	void fireBullets(/*float velocity,*/ int posY, int posX);
 	void renderBullets();
-	void updateBullets(float velocity, int posY, int posX);
-	void reloadBullets();
-	void fireBullets(float velocity, int posY, int posX);
-	void storeBullets();
 	void deleteBullet();
-	void checkingStruct();
+	void reloadBullets();
 
-	float getVelocity();
+	bool isActive();
+	bool isDead();
+	float setVelocity(float bulletSpeed);
 };

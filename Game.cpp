@@ -1,13 +1,10 @@
 #include "Game.h"
 
-bool keyPressed = false;
-bool isBulletFired = false;
-
 Game::Game()
 {
-	velocity = 0;
 	positionX = ship.getPointTop().x;
 	positionY = ship.getPointTop().y;
+	velocity = 0;
 }
 
 void Game::userInput()
@@ -16,7 +13,8 @@ void Game::userInput()
 	{
 		ship.moveForward();
 		ship.gravityReset();
-	}else {
+	}
+	else {
 		ship.gravityForward();
 	}
 
@@ -35,45 +33,39 @@ void Game::userInput()
 	{
 		ship.moveLeft();
 		ship.gravityReset();
-		
-	}else {
+
+	}
+	else {
 		ship.gravityLeft();
 	}
-	
-	
+
+
 	if (IsKeyDown(KEY_D))
 	{
 		ship.moveRight();
 		ship.gravityReset();
-		
-	}else {
+
+	}
+	else {
 		ship.gravityRight();
 	}
-	//PRIORITIZE::Fix so that the bullet change dynamically.
-	//ORIGINAL FIXED::Original fix is we put value on a bullet if the fire button is click
-	if (IsKeyPressed(KEY_E))
-	{
-		
-		velocity = ship.getVelocity();
-		positionY = ship.getPointTop().y;
-		positionX = ship.getPointTop().x;
-		keyPressed = true;
-		ship.checkingStruct();
-	}
-	if (keyPressed)
-	{
-			ship.fireBullets(ship.getVelocity(), positionY, positionX);
-			isBulletFired = true;
-	}
-}
 
+	positionY = ship.getPointTop().y;
+	positionX = ship.getPointTop().x;
+	if (IsKeyPressed(KEY_E))
+	{	
+		ship.reloadBullets();
+	}
+	else {
+		
+		ship.fireBullets(positionY, positionX);
+		
+	}
+	
+}
 
 void Game::Draw()
 {
-	
-	if (isBulletFired)
-	{
-		ship.renderBullets();
-	}
+	ship.renderBullets();
 	ship.Draw();
 }
