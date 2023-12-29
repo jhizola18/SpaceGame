@@ -184,7 +184,7 @@ void Player_Ship::updateBullets(int posY, int posX)
 	thisBullet = lastBullet;
 	while (thisBullet != firstBullet)
 	{
-		if (thisBullet->rec.x == NULL && thisBullet->rec.y == NULL)
+		if (thisBullet->rec.x == 0 && thisBullet->rec.y == 0)
 		{
 			thisBullet->rec.y = posY;
 			thisBullet->rec.x = posX;
@@ -229,8 +229,8 @@ void Player_Ship::renderBullets()
 	/**/
 	if (magCount == 7)
 	{
+		magCount = 6;
 		deleteBullet();
-		magCount = 0;
 	}
 }
 

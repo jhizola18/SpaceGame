@@ -30,7 +30,6 @@ private:
 	Bullet* NewBullet();
 
 	int bulletVelocity;
-	int clipSize;
 	float gravity_Y;
 	float gravity_X;
 	float speed;
@@ -57,13 +56,12 @@ public:
 	void gravityReset();
 
 	
-	void updateBullets(/*float velocity,*/ int posY, int posX);
-	void fireBullets(/*float velocity,*/ int posY, int posX);
+	void updateBullets(int posY, int posX);
+	void fireBullets( int posY, int posX);
 	void renderBullets();
 	void deleteBullet();
 	void reloadBullets();
 
 	bool isActive();
 	bool isDead();
-	float setVelocity(float bulletSpeed);
 };

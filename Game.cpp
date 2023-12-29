@@ -5,6 +5,7 @@ Game::Game()
 	positionX = ship.getPointTop().x;
 	positionY = ship.getPointTop().y;
 	velocity = 0;
+	
 }
 
 void Game::userInput()
@@ -61,11 +62,12 @@ void Game::userInput()
 		ship.fireBullets(positionY, positionX);
 		
 	}
-	
+	enemy.enemyMovement();
 }
 
 void Game::Draw()
 {
+	enemy.Draw();
 	ship.renderBullets();
 	ship.Draw();
 }
