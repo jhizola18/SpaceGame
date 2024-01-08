@@ -1,8 +1,8 @@
 #include "Spaceship.h"
 #include <iostream>
-#include "Enums.h"
 
-bool bulletActive;
+
+//bool bulletActive;
 int magCount;
 
 Player_Ship::Player_Ship()
@@ -21,7 +21,7 @@ Player_Ship::Player_Ship()
 	reloadBullets();
 }
 
-Vector2 Player_Ship::getPointTop()
+Vector2 Player_Ship::getPointTop() const
 {
 	return point_Top;
 }
@@ -205,6 +205,11 @@ bool Player_Ship::isDead()
 	else {
 		return false;
 	}
+}
+
+Player_Ship::Bullet* Player_Ship::getBullet()
+{
+	return lastBullet;
 }
 
 bool Player_Ship::isActive()

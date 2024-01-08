@@ -1,5 +1,7 @@
 #include "Game.h"
 
+int index = 0;
+
 Game::Game()
 {
 	positionX = ship.getPointTop().x;
@@ -60,9 +62,7 @@ void Game::userInput()
 	else {
 		
 		ship.fireBullets(positionY, positionX);
-		
 	}
-	enemy.enemyMovement();
 }
 
 void Game::Draw()
@@ -70,4 +70,10 @@ void Game::Draw()
 	enemy.Draw();
 	ship.renderBullets();
 	ship.Draw();
+}
+
+void Game::gameMechanics()
+{
+	enemy.enemyUpdate();
+	collision.check_collision(enemy, ship);
 }

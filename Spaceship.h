@@ -1,8 +1,8 @@
 #pragma once
 #include "raylib.h"
+#include "Enums.h"
 
-
-
+using namespace varHolder;
 
 class Player_Ship {
 private:
@@ -37,7 +37,8 @@ private:
 	
 public:
 	
-	Vector2 getPointTop();
+	
+	Vector2 getPointTop() const;
 
 	Player_Ship();
 	void Draw();
@@ -62,6 +63,8 @@ public:
 	void deleteBullet();
 	void reloadBullets();
 
+
+	Bullet* getBullet();
 	bool isActive();
 	bool isDead();
 };

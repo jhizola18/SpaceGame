@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Game.h" />
@@ -134,7 +135,9 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enums.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Spaceship.cpp" />

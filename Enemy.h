@@ -1,29 +1,33 @@
 #pragma once
 #include "raylib.h"
-#include<vector>
+#include <queue>
+#include <vector>
+#include <iostream>
+#include "Enums.h"
+
+using namespace varHolder;
 
 class EnemyManager {
 private:
 	class enemy {
-	private:
+	public:
 		Texture2D spriteTexture;
 		Vector2 spritePosition;
 		float spriteRotation;
 		float spriteScale;
+		bool spriteActive;
 		Color spriteColor;
-
-	public:
-		enemy(Vector2 position, float rotation, float scale, Color color);
-		void Draw();
-		void movement();
+		int checker;
+		int spriteSpeed;
+		enemy(Vector2 position, float rotation, float scale, Color color, bool active, int check);
 	};
-
-	std::vector<enemy> enemyHandler;
+	void deleteEnemy();
 	enemy enemies;
 public:
-
 	EnemyManager();
 	void Draw();
-	void enemyMovement();
-	std::vector<enemy> enemyPooling();
+	void enemyUpdate();
+	void addingEnemyObj();
+	std::deque <enemy> enemyPooling();
+	std::deque <enemy> handlers;
 };

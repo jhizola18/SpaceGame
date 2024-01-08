@@ -1,21 +1,19 @@
 #pragma once
 #include "Spaceship.h"
-#include "Enums.h"
 #include "Enemy.h"
-
+#include "Collision.h"
 
 class Game {
 private:
 	Player_Ship ship = Player_Ship();
 	EnemyManager enemy = EnemyManager();
-	//Trigger triggerMain;
-	
+	collision_Check collision = collision_Check();
 
 public:
 	Game();
 	void userInput();
 	void Draw();
-
+	void gameMechanics();
 	int velocity;
 	int positionY;
 	int positionX;
