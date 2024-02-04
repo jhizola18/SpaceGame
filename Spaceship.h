@@ -1,6 +1,8 @@
 #pragma once
 #include "raylib.h"
 #include "Enums.h"
+#include<vector>
+#include "Bullet.h"
 
 using namespace varHolder;
 
@@ -10,34 +12,15 @@ private:
 	Vector2 point_Left;
 	Vector2 point_Right;
 
-	struct Bullet {
-		Rectangle rec;
-		int bulletSpeed;
-		int data;
-		//int damage;
-
-		Color color;
-
-		Bullet* next;
-		Bullet* prev;
-	};
-
-	Bullet* firstBullet;//head
-	Bullet* lastBullet;//tail
-	Bullet* thisBullet;
-	Bullet* deadBullet;
-
-	Bullet* NewBullet();
-
 	int bulletVelocity;
 	float gravity_Y;
 	float gravity_X;
 	float speed;
-	void storeBullets();
+
 	
 public:
 	
-	
+	BulletManager bullet;
 	Vector2 getPointTop() const;
 
 	Player_Ship();
@@ -57,14 +40,8 @@ public:
 	void gravityReset();
 
 	
-	void updateBullets(int posY, int posX);
-	void fireBullets( int posY, int posX);
-	void renderBullets();
-	void deleteBullet();
-	void reloadBullets();
-
-
-	Bullet* getBullet();
-	bool isActive();
-	bool isDead();
+	//std::vector<Bullet> handler;
+	
+	
+	
 };

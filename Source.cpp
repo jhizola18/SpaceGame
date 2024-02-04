@@ -15,9 +15,9 @@ int main()
 		
 		game.userInput();
 		BeginDrawing();
+		game.gameMechanics();
 		ClearBackground(BLACK);
 		game.Draw();
-		game.gameMechanics();
 		EndDrawing();
 		
 	}

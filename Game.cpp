@@ -3,11 +3,12 @@
 int index = 0;
 
 Game::Game()
+	:
+	bullet()
 {
 	positionX = ship.getPointTop().x;
 	positionY = ship.getPointTop().y;
 	velocity = 0;
-	
 }
 
 void Game::userInput()
@@ -53,27 +54,32 @@ void Game::userInput()
 		ship.gravityRight();
 	}
 
-	positionY = ship.getPointTop().y;
-	positionX = ship.getPointTop().x;
 	if (IsKeyPressed(KEY_E))
-	{	
-		ship.reloadBullets();
+	{
+		positionY = ship.getPointTop().y;
+		positionX = ship.getPointTop().x;
+		bullet.updateBullet(positionX, positionY, bullet.getBullet());
+		
 	}
 	else {
+		bullet.bulletMovement();//speed);
 		
-		ship.fireBullets(positionY, positionX);
 	}
 }
 
 void Game::Draw()
 {
+	
+	bullet.drawBullet();
 	enemy.Draw();
-	ship.renderBullets();
 	ship.Draw();
+	
 }
 
 void Game::gameMechanics()
 {
+	collision.check_collision(enemy, bullet);
 	enemy.enemyUpdate();
-	collision.check_collision(enemy, ship);
+	
+	
 }

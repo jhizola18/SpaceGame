@@ -19,15 +19,19 @@ private:
 		Color spriteColor;
 		int checker;
 		int spriteSpeed;
-		enemy(Vector2 position, float rotation, float scale, Color color, bool active, int check);
+		enemy(Vector2 position,float rotation,float scale, Color color, bool active, int check);
 	};
-	void deleteEnemy();
+
 	enemy enemies;
+	
 public:
 	EnemyManager();
 	void Draw();
 	void enemyUpdate();
+	void resetEnemy();
 	void addingEnemyObj();
-	std::deque <enemy> enemyPooling();
-	std::deque <enemy> handlers;
+	std::vector<enemy> getEnemy();
+	std::vector <enemy> enemyPooling();
+	std::vector <enemy> handlers;
+	std::vector <enemy> extractor;
 };

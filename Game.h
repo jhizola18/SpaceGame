@@ -8,7 +8,8 @@ private:
 	Player_Ship ship = Player_Ship();
 	EnemyManager enemy = EnemyManager();
 	collision_Check collision = collision_Check();
-
+	BulletManager bullet;
+	EnemyManager enemies;
 public:
 	Game();
 	void userInput();

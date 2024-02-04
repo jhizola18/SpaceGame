@@ -6,19 +6,16 @@
 int magCount;
 
 Player_Ship::Player_Ship()
+	:
+	bullet()
 {
 	gravity_Y = 9.08f;
 	gravity_X = 0.0f;
 	point_Top = {300, 720};
 	point_Left = {280 , 750};
 	point_Right = { 320, 750 };
-	firstBullet = nullptr;
-	lastBullet = nullptr;
-	thisBullet = nullptr;
-	deadBullet = nullptr;
 	speed = 100.0f;
 	bulletVelocity = 0;
-	reloadBullets();
 }
 
 Vector2 Player_Ship::getPointTop() const
@@ -126,129 +123,84 @@ void Player_Ship::gravityReset()
 	}
 }
 
-Player_Ship::Bullet* Player_Ship::NewBullet()
-{
-	Bullet* NewBullet = new Bullet();
-	NewBullet->rec = {0, 0, 5, 10};
-	NewBullet->data = 15;
-	NewBullet->bulletSpeed = 5;
-	NewBullet->next = nullptr;
-	NewBullet->prev = nullptr;
-	NewBullet->color = WHITE;
 
-	return NewBullet;
+//OBJECT POOLING
+BulletManager::Bullet::Bullet(Rectangle rect, int speed, bool alive, Color col)
+{
+	rec = rect;
+	bulletSpeed = speed;
+	bulletAlive = alive;
+	color = col;
+};
+
+BulletManager::BulletManager()
+{
+	pool = bullet_Pool();
 }
 
-void Player_Ship::storeBullets()
+void BulletManager::drawBullet()
 {
-	thisBullet = NewBullet();
-	if (firstBullet == nullptr)
+	for (const auto& item : extractor)
 	{
-		thisBullet->next = firstBullet;
-		firstBullet = thisBullet;
-		lastBullet = firstBullet;
-		magCount++;
-	}
-	else {
-		Bullet* tracker = firstBullet;
-		while (tracker->next != lastBullet->next)
-		{
-			tracker = tracker->next;
-		}
-		lastBullet = thisBullet;
-		lastBullet->prev = tracker;
-		tracker->next = lastBullet;
-		lastBullet->next = firstBullet;
-		magCount++;
-	}
-}
-
-
-void Player_Ship::reloadBullets()
-{
-	storeBullets();
-	Bullet* thisBullet = firstBullet;
-	
-	while (thisBullet != lastBullet)
-	{
-		std::cout << thisBullet->data << " ";
-		thisBullet = thisBullet->next;
-	}
-	std::cout << "Linked list count content->  " << magCount << " ";
-	
-}
-
-
-void Player_Ship::updateBullets(int posY, int posX)
-{
-	thisBullet = lastBullet;
-	while (thisBullet != firstBullet)
-	{
-		if (thisBullet->rec.x == 0 && thisBullet->rec.y == 0)
-		{
-			thisBullet->rec.y = posY;
-			thisBullet->rec.x = posX;
-		}
-		thisBullet->data = 1;
-		thisBullet->rec.y -= thisBullet->bulletSpeed;
-		thisBullet = thisBullet->prev;
+		DrawRectangle(item.rec.x, item.rec.y, item.rec.width, item.rec.height, item.color);
+		std::cout << "Drawing\n";
 	}
 	
 }
 
-bool Player_Ship::isDead()
+void BulletManager::updateBullet(float posX, float posY, Bullet getBullet)
 {
-	if (lastBullet->rec.y < 0)
+	if (getBullet.bulletAlive == false)
 	{
-		return true;
+		getBullet.rec.x = posX;
+		getBullet.rec.y = posY;
+		getBullet.rec.width = 5.0f;
+		getBullet.rec.height = 10.0f;
+		getBullet.bulletAlive = true;
+		getBullet.bulletSpeed = 5.0f;
+		extractor.push_back(getBullet);
+		std::cout << "updated\n";
 	}
-	else {
-		return false;
-	}
-}
-
-Player_Ship::Bullet* Player_Ship::getBullet()
-{
-	return lastBullet;
-}
-
-bool Player_Ship::isActive()
-{
-	if (lastBullet->rec.y >= point_Top.y)
-	{
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-void Player_Ship::renderBullets()
-{
-	thisBullet = lastBullet;
-	while (thisBullet != firstBullet)
-	{
-		DrawRectangleRec(thisBullet->rec, thisBullet->color);
-		thisBullet = thisBullet->prev;
-	}
-	/**/
-	if (magCount == 7)
-	{
-		magCount = 6;
-		deleteBullet();
-	}
-}
-
-void Player_Ship::deleteBullet()
-{
-	thisBullet = firstBullet;
-	firstBullet = thisBullet->next;
-	deadBullet = thisBullet;
-	delete deadBullet;
-}
 	
+}
 
-void Player_Ship::fireBullets( int posY, int posX)
+void BulletManager::bulletMovement()//int speed)
 {
-	updateBullets( posY, posX);
+	
+	for(auto& item : extractor)
+	{
+		item.rec.y -= item.bulletSpeed;
+	}
+}
+
+
+BulletManager::Bullet BulletManager::getBullet()
+{
+	Bullet hold = pool.back();
+	pool.pop_back();
+	if (pool.empty())
+	{
+		/*Bullet bullet = Bullet({0,0,0,0},0,false,WHITE);
+		ship.handler.push_back(bullet);*/
+		std::cout << "EMPTY!!! ";
+	}
+	return hold;
+}
+//MAKE SURE THAT THIS IS NOT CREATING NEW WITHOUT 
+std::vector<BulletManager::Bullet> BulletManager::bullet_Pool() 
+{
+	std::vector<Bullet> returnStorage;
+	for (int i = 0; i < varHolder::clipSize(); ++i)
+	{
+		Rectangle rec = { 0.0f, 0.0f, 0.0f, 0.0f};
+		int speed = 5;
+		bool alive = false;
+		Color color = WHITE;
+
+		Bullet bullet = Bullet({rec},speed, alive, color);
+		returnStorage.push_back(bullet);
+		std::cout << " bullet stored ";
+	}
+	
+	return returnStorage;
 }

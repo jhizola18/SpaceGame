@@ -1,8 +1,17 @@
 #include "Enums.h"
 
 
-int varHolder::maxSize()
+int varHolder::clipSize()
 {
-	return GetRandomValue(3,8);
+	return 20;
 }
 
+int varHolder::enemySize()
+{
+	return GetRandomValue(4,6);
+}
+
+int varHolder::enemyPool()
+{
+	return 20;
+}

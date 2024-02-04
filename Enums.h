@@ -5,5 +5,7 @@ extern int magCount;
 
 namespace varHolder
 {
-	int maxSize();
+	int clipSize();
+	int enemySize();
+	int enemyPool();
 };
