@@ -1,9 +1,10 @@
 #pragma once
 #include "raylib.h"
-#include <queue>
 #include <vector>
 #include <iostream>
 #include "Enums.h"
+#include "Spaceship.h"
+#include <math.h>
 
 using namespace varHolder;
 
@@ -20,18 +21,24 @@ private:
 		int checker;
 		int spriteSpeed;
 		enemy(Vector2 position,float rotation,float scale, Color color, bool active, int check);
-	};
 
+		
+	};
+	
 	enemy enemies;
+	
 	
 public:
 	EnemyManager();
 	void Draw();
-	void enemyUpdate();
-	void resetEnemy();
-	void addingEnemyObj();
+	void enemyUpdate(Player_Ship& getShip);
+	//void resetEnemy(enemy getEnemy);
+	//void addingEnemyObj();
 	std::vector<enemy> getEnemy();
+	void resetEnemy(enemy& getEnemy);
+	void enemyMovement(enemy& getEnemy, Player_Ship& getShip);
 	std::vector <enemy> enemyPooling();
-	std::vector <enemy> handlers;
 	std::vector <enemy> extractor;
+	std::vector <enemy> handlers;
+	enemy enemyMove;
 };

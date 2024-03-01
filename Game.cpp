@@ -59,11 +59,9 @@ void Game::userInput()
 		positionY = ship.getPointTop().y;
 		positionX = ship.getPointTop().x;
 		bullet.updateBullet(positionX, positionY, bullet.getBullet());
-		
 	}
 	else {
-		bullet.bulletMovement();//speed);
-		
+		bullet.bulletMovement();
 	}
 }
 
@@ -78,8 +76,6 @@ void Game::Draw()
 
 void Game::gameMechanics()
 {
+	enemy.enemyUpdate(ship);
 	collision.check_collision(enemy, bullet);
-	enemy.enemyUpdate();
-	
-	
 }

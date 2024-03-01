@@ -12,7 +12,6 @@ private:
 	Vector2 point_Left;
 	Vector2 point_Right;
 
-	int bulletVelocity;
 	float gravity_Y;
 	float gravity_X;
 	float speed;

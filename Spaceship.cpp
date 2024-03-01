@@ -1,6 +1,6 @@
 #include "Spaceship.h"
 #include <iostream>
-
+#include "assert.h"
 
 //bool bulletActive;
 int magCount;
@@ -14,8 +14,7 @@ Player_Ship::Player_Ship()
 	point_Top = {300, 720};
 	point_Left = {280 , 750};
 	point_Right = { 320, 750 };
-	speed = 100.0f;
-	bulletVelocity = 0;
+	speed = 150.0f;
 }
 
 Vector2 Player_Ship::getPointTop() const
@@ -125,12 +124,14 @@ void Player_Ship::gravityReset()
 
 
 //OBJECT POOLING
-BulletManager::Bullet::Bullet(Rectangle rect, int speed, bool alive, Color col)
+BulletManager::Bullet::Bullet(int id, Rectangle rect, int speed, bool alive, Color col)
+	:
+	id(id),
+	rec(rect),
+	bulletSpeed(speed),
+	bulletAlive(alive),
+	color(col)
 {
-	rec = rect;
-	bulletSpeed = speed;
-	bulletAlive = alive;
-	color = col;
 };
 
 BulletManager::BulletManager()
@@ -138,26 +139,49 @@ BulletManager::BulletManager()
 	pool = bullet_Pool();
 }
 
+void BulletManager::resetBullet(Bullet& getBullet)
+{
+	getBullet.id = 0;
+	getBullet.rec = { 0.0f, 0.0f, 0.0f, 0.0f };
+	getBullet.bulletSpeed = 0;
+	getBullet.color = BLACK;
+	getBullet.bulletAlive = false;
+	pool.push_back(getBullet);
+}
+
+void BulletManager::deleteBulletFromContainer(Bullet* getBullet)
+{
+	std::cout << " DELETING BULLET OBJECT: \n";
+	delete[] getBullet;
+}
+
+
 void BulletManager::drawBullet()
 {
-	for (const auto& item : extractor)
+	for (auto& item : extractor)
 	{
-		DrawRectangle(item.rec.x, item.rec.y, item.rec.width, item.rec.height, item.color);
-		std::cout << "Drawing\n";
+		if (item.bulletAlive == true)
+		{
+			DrawRectangle(item.rec.x, item.rec.y, item.rec.width, item.rec.height, item.color);
+		}
+		else {
+			continue;
+		}
 	}
-	
 }
 
 void BulletManager::updateBullet(float posX, float posY, Bullet getBullet)
 {
 	if (getBullet.bulletAlive == false)
 	{
+		getBullet.id = 1;
 		getBullet.rec.x = posX;
 		getBullet.rec.y = posY;
 		getBullet.rec.width = 5.0f;
 		getBullet.rec.height = 10.0f;
 		getBullet.bulletAlive = true;
-		getBullet.bulletSpeed = 5.0f;
+		getBullet.bulletSpeed = 5;
+		getBullet.color = WHITE;
 		extractor.push_back(getBullet);
 		std::cout << "updated\n";
 	}
@@ -180,27 +204,35 @@ BulletManager::Bullet BulletManager::getBullet()
 	pool.pop_back();
 	if (pool.empty())
 	{
-		/*Bullet bullet = Bullet({0,0,0,0},0,false,WHITE);
-		ship.handler.push_back(bullet);*/
 		std::cout << "EMPTY!!! ";
+		pool = bullet_Pool();
+		
 	}
+
+	for (int i = 0; i < pool.size(); ++i)
+	{
+		std::cout << " content of the pool: " << i << " ";
+	}
+
 	return hold;
+	
 }
+
+
 //MAKE SURE THAT THIS IS NOT CREATING NEW WITHOUT 
-std::vector<BulletManager::Bullet> BulletManager::bullet_Pool() 
+std::deque<BulletManager::Bullet> BulletManager::bullet_Pool() 
 {
-	std::vector<Bullet> returnStorage;
+	std::deque<Bullet> returnStorage;
 	for (int i = 0; i < varHolder::clipSize(); ++i)
 	{
 		Rectangle rec = { 0.0f, 0.0f, 0.0f, 0.0f};
-		int speed = 5;
+		int speed = 0;
 		bool alive = false;
 		Color color = WHITE;
 
-		Bullet bullet = Bullet({rec},speed, alive, color);
+		Bullet bullet = Bullet(0,{rec},speed, alive, color);
 		returnStorage.push_back(bullet);
 		std::cout << " bullet stored ";
 	}
-	
 	return returnStorage;
 }

@@ -12,14 +12,12 @@ int main()
 
 	while (!window.gameShouldClose())
 	{
-		
 		game.userInput();
 		BeginDrawing();
 		game.gameMechanics();
 		ClearBackground(BLACK);
 		game.Draw();
 		EndDrawing();
-		
 	}
 
 	return 0;

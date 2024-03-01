@@ -4,7 +4,8 @@ int fps = 0;
 
 EnemyManager::EnemyManager()
 	:
-	enemies({ 0,0 }, 0,0 , BLACK, false, 1)
+	enemies({ 0,0 }, 0,0 , BLACK, false, 1),
+	enemyMove({ 0,0 }, 0, 0, BLACK, false, 1)
 {
 	handlers = enemyPooling();
 	extractor = getEnemy();
@@ -21,7 +22,6 @@ EnemyManager::enemy::enemy( Vector2 position, float rotation, float scale, Color
 	spriteSpeed(GetRandomValue(2,4)),
 	checker(check)
 {
-	//std::cout << "Enemy Created!!!" << std::endl;
 }
 
 void EnemyManager::Draw()
@@ -31,17 +31,28 @@ void EnemyManager::Draw()
 	{
 		if (fps > 148)
 		{
-			DrawTextureEx(enemies.spriteTexture,item.spritePosition, item.spriteRotation, item.spriteScale,item.spriteColor);
-			//DrawRectangle(item.spritePosition.x, item.spritePosition.y, item.spriteRectangle.width, item.spriteRectangle.height, item.spriteColor);
-			std::cout << item.checker << " ";
+			if (item.spriteActive == true)
+			{
+				DrawTextureEx(enemies.spriteTexture, item.spritePosition, item.spriteRotation, item.spriteScale, item.spriteColor);
+			}
+			else {
+				continue;
+			}
+			
 		}
-		//std::cout << "Enemy Drawm!!" << std::endl;
 	}
-	std::cout << "Finish iterating!! " << std::endl;
 }
 
-void EnemyManager::enemyUpdate()
+void EnemyManager::enemyUpdate(Player_Ship& getShip)
 {
+	if (extractor.size() == 2 || extractor.empty())
+	{
+		extractor = getEnemy();
+	}
+	if (handlers.empty())
+	{
+		std::cout << " Empty pool ";
+	}
 	for (int i = 0; i < extractor.size(); i++)
 	{
 		if (fps > 148)
@@ -60,64 +71,61 @@ void EnemyManager::enemyUpdate()
 					extractor[i].spriteScale = Scale;
 					extractor[i].spritePosition = Position;
 					extractor[i].spriteActive = true;
-					extractor[i].spriteSpeed = 5;
 				}
 			}
-			extractor[i].spritePosition.y += extractor[i].spriteSpeed;
-		}
-	}
-}
-
-void EnemyManager::resetEnemy()
-{
-	for (int i = 0; i < extractor.size(); ++i)
-	{
-		if (extractor[i].spriteActive == false)
-		{
-			extractor[i].spritePosition.y = 0;
-			extractor[i].spritePosition.x = 0;
-			extractor[i].spriteSpeed = 0;
-			extractor[i].spriteColor = BLACK;
-		}
-	}
-}
-
-void EnemyManager::addingEnemyObj()
-{
-	std::cout << "ADDING ENEMY!!! ";
-	if (handlers.empty())
-	{
-		std::cout << "Empty!!";
-		for (int i = 0; i < varHolder::enemySize(); ++i)
-		{
-			int minY = -20;
-			int maxY = -20;
-			int minX = -5;
-			int maxX = GetScreenWidth() - 50;
-			Vector2 Position = { GetRandomValue(minX, maxX), GetRandomValue(minY, maxY) };
-			float Scale = 1.5f;
-			enemies = enemy{ {Position.x, Position.y}, 0, Scale, WHITE, false,5};
 			
-			handlers.push_back(enemies);
-		}	
+			enemyMovement(extractor[i], getShip);
+		}
+	}
+}
+//study this code and the use of the trigo signs
+void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
+{
+	double xd = getShip.getPointTop().x - getEnemy.spritePosition.x;
+	double yd = getShip.getPointTop().y - getEnemy.spritePosition.y;
+
+	double hyp = sqrt(pow(xd, 2) + pow(yd, 2));
+
+
+	getEnemy.spritePosition.y += (yd / hyp) * getEnemy.spriteSpeed; 
+	getEnemy.spritePosition.x += (xd / hyp) * getEnemy.spriteSpeed; 
+}
+
+void EnemyManager::resetEnemy(enemy& getEnemy)
+{
+	if (getEnemy.spriteActive == true)
+	{
+		getEnemy.spritePosition.y = 0;
+		getEnemy.spritePosition.x = 0;
+		getEnemy.spriteRotation = 0;
+		getEnemy.spriteScale = 0;
+		getEnemy.checker = 0;
+		getEnemy.spriteColor = WHITE;
+		getEnemy.spriteActive = false;
+		handlers.push_back(getEnemy);
 	}
 }
 
+
+//Spawn enemy if the container is empty
 std::vector<EnemyManager::enemy> EnemyManager::getEnemy()
 {
 	std::vector<EnemyManager::enemy> hold;
 	for (int i = 0; i < varHolder::enemySize(); ++i)
 	{
-		enemies = handlers.front();
+		enemies = handlers.back();
 		hold.push_back(enemies);
 		handlers.pop_back();
 	}
-	
+	if (handlers.empty())
+	{
+		std::cout << " EMPTY Pool ";
+	}
 	return hold;
 }
 
 
-//Change to single push but can spawn immediatley depends on the firs spawn position
+//check storage of the pool if exhausted
 std::vector<EnemyManager::enemy> EnemyManager::enemyPooling()
 {
 	std::vector <enemy> enemyStorage;

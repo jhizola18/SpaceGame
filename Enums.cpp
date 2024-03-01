@@ -8,7 +8,7 @@ int varHolder::clipSize()
 
 int varHolder::enemySize()
 {
-	return GetRandomValue(4,6);
+	return 10;
 }
 
 int varHolder::enemyPool()
