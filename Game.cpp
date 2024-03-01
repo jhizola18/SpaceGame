@@ -77,5 +77,5 @@ void Game::Draw()
 void Game::gameMechanics()
 {
 	enemy.enemyUpdate(ship);
-	collision.check_collision(enemy, bullet);
+	collision.check_collision(enemy, bullet,ship);
 }

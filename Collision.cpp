@@ -8,11 +8,12 @@ collision_Check::collision_Check()
 {
 }
 
-void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& bullet)
+void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& bullet, Player_Ship& ship_body)
 {
+	int spriteDimension = 34;
 	for (int i = 0; i < bullet.extractor.size(); ++i)
 	{
-		int spriteDimension = 34;
+		//enemy to bullet and enemy to outbounds collision
 		for (int j = 0; j < enemy_body.extractor.size(); ++j)
 		{
 			std::cout << " Bullet count-> " << i << " \nEnemy Count-> " << j << " \n";
@@ -48,6 +49,17 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 			}
 		}
 	}
+
+	//enemy-player collision
+	for (int check = 0; check < enemy_body.extractor.size(); ++check)
+	{
+		//check for collision in each side
+		if (ship_body.getPointTop().x > enemy_body.extractor[check].spritePosition.y && ship_body.getPointTop().x < enemy_body.extractor[check].spritePosition.x + (enemy_body.extractor[check].spriteScale * spriteDimension) && ship_body.getPointTop().y > enemy_body.extractor[check].spritePosition.y && ship_body.getPointTop().y < enemy_body.extractor[check].spritePosition.y + (spriteDimension * enemy_body.extractor[check].spriteScale))
+		{
+			enemy_body.resetEnemy(enemy_body.extractor[check]);
+		}
+	}
+
 }
 		
 

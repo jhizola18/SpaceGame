@@ -81,14 +81,14 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 //study this code and the use of the trigo signs
 void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
 {
-	double xd = getShip.getPointTop().x - getEnemy.spritePosition.x;
-	double yd = getShip.getPointTop().y - getEnemy.spritePosition.y;
+	double x_distance = getShip.getPointTop().x - getEnemy.spritePosition.x;
+	double y_distance = getShip.getPointTop().y - getEnemy.spritePosition.y;
 
-	double hyp = sqrt(pow(xd, 2) + pow(yd, 2));
+	double normalized_V = sqrt(pow(x_distance, 2) + pow(y_distance, 2));
 
 
-	getEnemy.spritePosition.y += (yd / hyp) * getEnemy.spriteSpeed; 
-	getEnemy.spritePosition.x += (xd / hyp) * getEnemy.spriteSpeed; 
+	getEnemy.spritePosition.y += (y_distance / normalized_V) * getEnemy.spriteSpeed; 
+	getEnemy.spritePosition.x += (x_distance / normalized_V) * getEnemy.spriteSpeed; 
 }
 
 void EnemyManager::resetEnemy(enemy& getEnemy)
