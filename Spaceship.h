@@ -20,7 +20,9 @@ private:
 public:
 	
 	BulletManager bullet;
-	Vector2 getPointTop() const;
+	Vector2 getPointTop();
+	Vector2 getPointRight();
+	Vector2 getPointLeft();
 
 	Player_Ship();
 	void Draw();

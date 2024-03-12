@@ -1,5 +1,4 @@
 #include "Collision.h"
-//#include "math.h"
 #include "assert.h"
 #include <iterator>
 #include "algorithm"
@@ -17,18 +16,16 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 		for (int j = 0; j < enemy_body.extractor.size(); ++j)
 		{
 			std::cout << " Bullet count-> " << i << " \nEnemy Count-> " << j << " \n";
-			if (bullet.extractor[i].rec.y <= enemy_body.extractor[j].spritePosition.y + (spriteDimension * enemy_body.extractor[j].spriteScale) && bullet.extractor[i].rec.x >= enemy_body.extractor[j].spritePosition.x && bullet.extractor[i].rec.x + bullet.extractor[i].rec.width <= enemy_body.extractor[j].spritePosition.x + (spriteDimension * enemy_body.extractor[j].spriteScale))
+			if (bullet.extractor[i].rec.y + varHolder::bulletOffset() <= enemy_body.extractor[j].spritePosition.y + (spriteDimension * enemy_body.extractor[j].spriteScale) && bullet.extractor[i].rec.x + varHolder::bulletOffset() >= enemy_body.extractor[j].spritePosition.x  && bullet.extractor[i].rec.x + bullet.extractor[i].rec.width <= enemy_body.extractor[j].spritePosition.x + (spriteDimension * enemy_body.extractor[j].spriteScale))
 			{
 				DrawText("Object Collided Bottom Part", 200, 500, 15, WHITE);
 				bullet.resetBullet(bullet.extractor[i]);
 				enemy_body.resetEnemy(enemy_body.extractor[j]);
 			}
 			else {
-				if (enemy_body.extractor[j].spritePosition.y > 800)
+				if (enemy_body.extractor[j].spritePosition.x > GetScreenHeight())
 				{
 					DrawText(" Out of Bounds ", 200, 500, 15, WHITE);
-					enemy_body.resetEnemy(enemy_body.extractor[j]);
-					enemy_body.extractor.erase(enemy_body.extractor.begin() + j);
 				}
 				if (bullet.extractor[i].rec.y + bullet.extractor[i].rec.width < 0)
 				{
@@ -48,18 +45,23 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 				bullet.extractor.erase(bullet.extractor.begin() + i);
 			}
 		}
+		
 	}
-
+	//another method to try getting the centroid of the triangle
+	float new_X = ((ship_body.getPointTop().x + ship_body.getPointRight().x + ship_body.getPointLeft().x) /3);
+	float new_Y = ((ship_body.getPointTop().y + ship_body.getPointRight().y + ship_body.getPointLeft().y) / 3);
 	//enemy-player collision
+	int offset = 25;
 	for (int check = 0; check < enemy_body.extractor.size(); ++check)
 	{
-		//check for collision in each side
-		if (ship_body.getPointTop().x > enemy_body.extractor[check].spritePosition.y && ship_body.getPointTop().x < enemy_body.extractor[check].spritePosition.x + (enemy_body.extractor[check].spriteScale * spriteDimension) && ship_body.getPointTop().y > enemy_body.extractor[check].spritePosition.y && ship_body.getPointTop().y < enemy_body.extractor[check].spritePosition.y + (spriteDimension * enemy_body.extractor[check].spriteScale))
+		//Original
+		if (new_X > enemy_body.extractor[check].spritePosition.x && new_X  < enemy_body.extractor[check].spritePosition.x + (enemy_body.extractor[check].spriteScale * spriteDimension) && new_Y  > enemy_body.extractor[check].spritePosition.y && new_Y  < enemy_body.extractor[check].spritePosition.y + (enemy_body.extractor[check].spriteScale * spriteDimension))
 		{
+			DrawText(" HIT ", 200, 500, 15, WHITE);
 			enemy_body.resetEnemy(enemy_body.extractor[check]);
+			
 		}
 	}
-
 }
 		
 

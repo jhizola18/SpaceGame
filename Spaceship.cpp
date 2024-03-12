@@ -14,14 +14,24 @@ Player_Ship::Player_Ship()
 	point_Top = {300, 720};
 	point_Left = {280 , 750};
 	point_Right = { 320, 750 };
-	speed = 150.0f;
+	speed = 250.0f;
 }
 
-Vector2 Player_Ship::getPointTop() const
+Vector2 Player_Ship::getPointTop()
 {
 	return point_Top;
 }
 
+
+Vector2 Player_Ship::getPointRight()
+{
+	return point_Right;
+}
+
+Vector2 Player_Ship::getPointLeft()
+{
+	return point_Left;
+}
 void Player_Ship::Draw()
 {
 	//counterclockwise
@@ -124,9 +134,10 @@ void Player_Ship::gravityReset()
 
 
 //OBJECT POOLING
-BulletManager::Bullet::Bullet(int id, Rectangle rect, int speed, bool alive, Color col)
+BulletManager::Bullet::Bullet(int id, float dmg, Rectangle rect, int speed, bool alive, Color col)
 	:
 	id(id),
+	damage(dmg),
 	rec(rect),
 	bulletSpeed(speed),
 	bulletAlive(alive),

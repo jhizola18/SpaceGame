@@ -43,6 +43,7 @@ void EnemyManager::Draw()
 	}
 }
 
+//Giving enemy object parameters
 void EnemyManager::enemyUpdate(Player_Ship& getShip)
 {
 	if (extractor.size() == 2 || extractor.empty())
@@ -78,19 +79,28 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 		}
 	}
 }
-//study this code and the use of the trigo signs
+
+//Calculating the distance between the enemy and the player and getting the magnitude of the Distance Vector || to make enemy move towards player
 void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
 {
-	double x_distance = getShip.getPointTop().x - getEnemy.spritePosition.x;
-	double y_distance = getShip.getPointTop().y - getEnemy.spritePosition.y;
+	//centroid of the triangle
+	float new_X = ((getShip.getPointTop().x + getShip.getPointRight().x + getShip.getPointLeft().x) / 3.0f);
+	float new_Y = ((getShip.getPointTop().y + getShip.getPointRight().y + getShip.getPointLeft().y) / 3.0f);
+	//34x34 original size of the sprite
+	float spriteDimension = 34.0f;
 
-	double normalized_V = sqrt(pow(x_distance, 2) + pow(y_distance, 2));
+	//divide the size of the enemy into half to make it go to the center of the player
+	double x_distance = new_X - (getEnemy.spritePosition.x + ((getEnemy.spriteScale * spriteDimension) /2.0f));
+	double y_distance = new_Y - (getEnemy.spritePosition.y + ((getEnemy.spriteScale * spriteDimension) / 2.0f));
+	//normalizing the vector
+	double normalized_V = sqrt(pow(x_distance,2) + pow(y_distance, 2));
 
-
-	getEnemy.spritePosition.y += (y_distance / normalized_V) * getEnemy.spriteSpeed; 
+	//magnitude
+	getEnemy.spritePosition.y += (y_distance  /normalized_V) * getEnemy.spriteSpeed; 
 	getEnemy.spritePosition.x += (x_distance / normalized_V) * getEnemy.spriteSpeed; 
 }
 
+//reset enemy value to zero and putting back to the pool
 void EnemyManager::resetEnemy(enemy& getEnemy)
 {
 	if (getEnemy.spriteActive == true)
@@ -107,7 +117,7 @@ void EnemyManager::resetEnemy(enemy& getEnemy)
 }
 
 
-//Spawn enemy if the container is empty
+//Getting enemy from the pool
 std::vector<EnemyManager::enemy> EnemyManager::getEnemy()
 {
 	std::vector<EnemyManager::enemy> hold;
@@ -125,7 +135,7 @@ std::vector<EnemyManager::enemy> EnemyManager::getEnemy()
 }
 
 
-//check storage of the pool if exhausted
+//Creating a pool
 std::vector<EnemyManager::enemy> EnemyManager::enemyPooling()
 {
 	std::vector <enemy> enemyStorage;

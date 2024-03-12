@@ -11,10 +11,10 @@ private:
 		Rectangle rec;
 		int bulletSpeed;
 		bool bulletAlive;
-		//int damage;
+		float damage;
 		
 		Color color;
-		Bullet(int id, Rectangle rect, int speed, bool alive, Color col);
+		Bullet(int id, float dmg ,Rectangle rect, int speed, bool alive, Color col);
 	};
 	static Bullet bullets;
 	 
