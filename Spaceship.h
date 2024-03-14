@@ -15,6 +15,7 @@ private:
 	float gravity_Y;
 	float gravity_X;
 	float speed;
+	float health;
 
 	
 public:
@@ -23,6 +24,8 @@ public:
 	Vector2 getPointTop();
 	Vector2 getPointRight();
 	Vector2 getPointLeft();
+
+	float getHealth();
 
 	Player_Ship();
 	void Draw();

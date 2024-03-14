@@ -15,6 +15,12 @@ Player_Ship::Player_Ship()
 	point_Left = {280 , 750};
 	point_Right = { 320, 750 };
 	speed = 250.0f;
+	health = 100.0f;
+}
+
+float Player_Ship::getHealth()
+{
+	return health;
 }
 
 Vector2 Player_Ship::getPointTop()
@@ -153,6 +159,7 @@ BulletManager::BulletManager()
 void BulletManager::resetBullet(Bullet& getBullet)
 {
 	getBullet.id = 0;
+	getBullet.damage = 0.0f;
 	getBullet.rec = { 0.0f, 0.0f, 0.0f, 0.0f };
 	getBullet.bulletSpeed = 0;
 	getBullet.color = BLACK;
@@ -186,6 +193,7 @@ void BulletManager::updateBullet(float posX, float posY, Bullet getBullet)
 	if (getBullet.bulletAlive == false)
 	{
 		getBullet.id = 1;
+		getBullet.damage = 50.0f;
 		getBullet.rec.x = posX;
 		getBullet.rec.y = posY;
 		getBullet.rec.width = 5.0f;
@@ -236,12 +244,13 @@ std::deque<BulletManager::Bullet> BulletManager::bullet_Pool()
 	std::deque<Bullet> returnStorage;
 	for (int i = 0; i < varHolder::clipSize(); ++i)
 	{
+		float dmg = 0.0f;
 		Rectangle rec = { 0.0f, 0.0f, 0.0f, 0.0f};
 		int speed = 0;
 		bool alive = false;
 		Color color = WHITE;
 
-		Bullet bullet = Bullet(0,{rec},speed, alive, color);
+		Bullet bullet = Bullet(0,dmg,{rec},speed, alive, color);
 		returnStorage.push_back(bullet);
 		std::cout << " bullet stored ";
 	}

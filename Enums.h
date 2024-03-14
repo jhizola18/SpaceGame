@@ -8,4 +8,6 @@ namespace varHolder
 	int clipSize();
 	int enemySize();
 	int enemyPool();
+	int collisionOffset();
+	int bulletOffset();
 };

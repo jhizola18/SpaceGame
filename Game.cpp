@@ -73,7 +73,7 @@ void Game::Draw()
 	ship.Draw();
 	
 }
-
+//Create a mechanics for gaming
 void Game::gameMechanics()
 {
 	enemy.enemyUpdate(ship);

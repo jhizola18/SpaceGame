@@ -20,7 +20,9 @@ private:
 		Color spriteColor;
 		int checker;
 		int spriteSpeed;
-		enemy(Vector2 position,float rotation,float scale, Color color, bool active, int check);
+		float health;
+		float damage;
+		enemy(float dmg, Vector2 position,float rotation,float scale, Color color, bool active, int check);
 
 		
 	};

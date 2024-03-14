@@ -4,16 +4,18 @@ int fps = 0;
 
 EnemyManager::EnemyManager()
 	:
-	enemies({ 0,0 }, 0,0 , BLACK, false, 1),
-	enemyMove({ 0,0 }, 0, 0, BLACK, false, 1)
+	enemies(0.0f,{ 0,0 }, 0,0 , BLACK, false, 1),
+	enemyMove(0.0f,{ 0,0 }, 0, 0, BLACK, false, 1)
 {
 	handlers = enemyPooling();
 	extractor = getEnemy();
 }
 
-EnemyManager::enemy::enemy( Vector2 position, float rotation, float scale, Color color, bool active, int check)
+EnemyManager::enemy::enemy(float dmg, Vector2 position, float rotation, float scale, Color color, bool active, int check)
 	:
 	spriteTexture(LoadTexture("Image/Meteor_one.png")),
+	damage(dmg),
+	health(100.0f),
 	spriteColor (color),
 	spritePosition(position),
 	spriteScale(scale),
@@ -64,11 +66,14 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 			int maxX = GetScreenWidth() - 50;
 			Vector2 Position = { GetRandomValue(minX, maxX), GetRandomValue(minY, maxY) };
 			float Scale = 1.5f;
+			float damage = 20.0f;
+			
 
 			if (extractor[i].spriteActive == false)
 			{
 				if (extractor[i].spriteScale == 0 && extractor[i].spritePosition.x == 0 && extractor[i].spritePosition.y == 0)
 				{
+					extractor[i].damage = damage;
 					extractor[i].spriteScale = Scale;
 					extractor[i].spritePosition = Position;
 					extractor[i].spriteActive = true;
@@ -105,6 +110,8 @@ void EnemyManager::resetEnemy(enemy& getEnemy)
 {
 	if (getEnemy.spriteActive == true)
 	{
+		getEnemy.damage = 0.0f;
+		getEnemy.health = 100.0f;
 		getEnemy.spritePosition.y = 0;
 		getEnemy.spritePosition.x = 0;
 		getEnemy.spriteRotation = 0;
@@ -141,7 +148,7 @@ std::vector<EnemyManager::enemy> EnemyManager::enemyPooling()
 	std::vector <enemy> enemyStorage;
 	for (int i = 0; i < varHolder::enemyPool(); ++i)
 	{
-		enemy enemies = enemy{ {0,0}, 0, 0, WHITE, false, 5 };
+		enemy enemies = enemy{0.0f,{0,0}, 0, 0, WHITE, false, 5 };
 		enemyStorage.push_back(enemies);
 	}
 	return enemyStorage;
