@@ -13,5 +13,4 @@ private:
 public:
 	collision_Check();
 	void check_collision(EnemyManager& enemy_body, BulletManager& bullet, Player_Ship& ship_body);
-	bool on_screen(EnemyManager& enemy_body);
 };

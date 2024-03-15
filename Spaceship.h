@@ -1,10 +1,10 @@
 #pragma once
 #include "raylib.h"
-#include "Enums.h"
+
 #include<vector>
 #include "Bullet.h"
 
-using namespace varHolder;
+
 
 class Player_Ship {
 private:
@@ -25,9 +25,12 @@ public:
 	Vector2 getPointRight();
 	Vector2 getPointLeft();
 
-	float getHealth();
-
+	float& getHealth();
+	
 	Player_Ship();
+	~Player_Ship();
+	void ResetShip();
+
 	void Draw();
 
 	void moveForward();

@@ -1,6 +1,9 @@
 #include "Spaceship.h"
 #include <iostream>
 #include "assert.h"
+#include "Enums.h"
+
+using namespace varHolder;
 
 //bool bulletActive;
 int magCount;
@@ -18,10 +21,22 @@ Player_Ship::Player_Ship()
 	health = 100.0f;
 }
 
-float Player_Ship::getHealth()
+Player_Ship::~Player_Ship()
 {
-	return health;
+
 }
+
+void Player_Ship::ResetShip()
+{
+	point_Top = { 0, 0 };
+	point_Left = { 0 , 0 };
+	point_Right = { 0, 0 };
+	speed = 250.0f;
+	gravity_Y = 9.08f;
+	gravity_X = 0.0f;
+	health = 100.0f;
+}
+
 
 Vector2 Player_Ship::getPointTop()
 {
@@ -37,6 +52,10 @@ Vector2 Player_Ship::getPointRight()
 Vector2 Player_Ship::getPointLeft()
 {
 	return point_Left;
+}
+float& Player_Ship::getHealth()
+{
+	return health;
 }
 void Player_Ship::Draw()
 {
@@ -180,7 +199,7 @@ void BulletManager::drawBullet()
 	{
 		if (item.bulletAlive == true)
 		{
-			DrawRectangle(item.rec.x, item.rec.y, item.rec.width, item.rec.height, item.color);
+			DrawRectangle((int)item.rec.x, (int)item.rec.y, (int)item.rec.width, (int)item.rec.height, item.color);
 		}
 		else {
 			continue;

@@ -2,6 +2,7 @@
 #include"raylib.h"
 
 extern int magCount;
+extern bool gameOver;
 
 namespace varHolder
 {
@@ -10,4 +11,5 @@ namespace varHolder
 	int enemyPool();
 	int collisionOffset();
 	int bulletOffset();
+	
 };

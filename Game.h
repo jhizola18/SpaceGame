@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Collision.h"
 
+
 class Game {
 private:
 	Player_Ship ship = Player_Ship();
@@ -16,6 +17,6 @@ public:
 	void Draw();
 	void gameMechanics();
 	int velocity;
-	int positionY;
-	int positionX;
+	float positionY;
+	float positionX;
 };

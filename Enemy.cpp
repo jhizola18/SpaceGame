@@ -1,4 +1,7 @@
 #include "Enemy.h"
+#include "Enums.h"
+
+using namespace varHolder;
 
 int fps = 0;
 
@@ -9,6 +12,19 @@ EnemyManager::EnemyManager()
 {
 	handlers = enemyPooling();
 	extractor = getEnemy();
+}
+
+EnemyManager::~EnemyManager()
+{
+	for (int i = 0; i < handlers.size(); ++i)
+	{
+		handlers.pop_back();
+	}
+
+	for (int j = 0; j < extractor.size(); ++j)
+	{
+		extractor.pop_back();
+	}
 }
 
 EnemyManager::enemy::enemy(float dmg, Vector2 position, float rotation, float scale, Color color, bool active, int check)
@@ -24,6 +40,21 @@ EnemyManager::enemy::enemy(float dmg, Vector2 position, float rotation, float sc
 	spriteSpeed(GetRandomValue(2,4)),
 	checker(check)
 {
+}
+
+void EnemyManager::resetFullEnemy()
+{
+	for (int i = 0; i < extractor.size(); ++i)
+	{
+		extractor[i].spritePosition = { 0, 0 };
+		extractor[i].checker = 0;
+		extractor[i].spriteColor = WHITE;
+		extractor[i].spriteRotation = 0;
+		extractor[i].spriteScale = 0;
+		extractor[i].health = 100.0f;
+		extractor[i].spriteActive = false;
+		extractor[i].damage = 0.0f;
+	}
 }
 
 void EnemyManager::Draw()
@@ -64,7 +95,7 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 			int maxY = -5;
 			int minX = 0;
 			int maxX = GetScreenWidth() - 50;
-			Vector2 Position = { GetRandomValue(minX, maxX), GetRandomValue(minY, maxY) };
+			Vector2 Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
 			float Scale = 1.5f;
 			float damage = 20.0f;
 			
@@ -94,13 +125,13 @@ void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
 	//34x34 original size of the sprite
 	float spriteDimension = 34.0f;
 
-	//divide the size of the enemy into half to make it go to the center of the player
-	double x_distance = new_X - (getEnemy.spritePosition.x + ((getEnemy.spriteScale * spriteDimension) /2.0f));
-	double y_distance = new_Y - (getEnemy.spritePosition.y + ((getEnemy.spriteScale * spriteDimension) / 2.0f));
-	//normalizing the vector
-	double normalized_V = sqrt(pow(x_distance,2) + pow(y_distance, 2));
+	//Distance between the player and the enemy divide by two to make the enemy move towards the center of the player
+	float x_distance = new_X - (getEnemy.spritePosition.x + ((getEnemy.spriteScale * spriteDimension) /2.0f));
+	float y_distance = new_Y - (getEnemy.spritePosition.y + ((getEnemy.spriteScale * spriteDimension) / 2.0f));
+	//normalizing the vector || magnitude of a vector
+	float normalized_V = sqrt((float)pow(x_distance, 2) + (float)pow(y_distance, 2));
 
-	//magnitude
+	//adding the calculated distance to the new position x,y of the enemy
 	getEnemy.spritePosition.y += (y_distance  /normalized_V) * getEnemy.spriteSpeed; 
 	getEnemy.spritePosition.x += (x_distance / normalized_V) * getEnemy.spriteSpeed; 
 }

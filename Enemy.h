@@ -2,11 +2,9 @@
 #include "raylib.h"
 #include <vector>
 #include <iostream>
-#include "Enums.h"
+
 #include "Spaceship.h"
 #include <math.h>
-
-using namespace varHolder;
 
 class EnemyManager {
 private:
@@ -23,6 +21,7 @@ private:
 		float health;
 		float damage;
 		enemy(float dmg, Vector2 position,float rotation,float scale, Color color, bool active, int check);
+		
 
 		
 	};
@@ -32,12 +31,15 @@ private:
 	
 public:
 	EnemyManager();
+	~EnemyManager();
+
 	void Draw();
 	void enemyUpdate(Player_Ship& getShip);
 	//void resetEnemy(enemy getEnemy);
 	//void addingEnemyObj();
 	std::vector<enemy> getEnemy();
 	void resetEnemy(enemy& getEnemy);
+	void resetFullEnemy();
 	void enemyMovement(enemy& getEnemy, Player_Ship& getShip);
 	std::vector <enemy> enemyPooling();
 	std::vector <enemy> extractor;

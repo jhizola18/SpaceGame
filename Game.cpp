@@ -1,6 +1,11 @@
 #include "Game.h"
+#include "enums.h"
+
+using namespace varHolder;
 
 int index = 0;
+
+
 
 Game::Game()
 	:
@@ -78,4 +83,9 @@ void Game::gameMechanics()
 {
 	enemy.enemyUpdate(ship);
 	collision.check_collision(enemy, bullet,ship);
+	if (gameOver == true)
+	{
+		enemy.resetFullEnemy();
+		ship.ResetShip();
+	}
 }
