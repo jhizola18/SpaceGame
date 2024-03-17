@@ -20,11 +20,11 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 		for (int j = 0; j < enemy_body.extractor.size(); ++j)
 		{
 			std::cout << " Bullet count-> " << i << " \nEnemy Count-> " << j << " \n";
-			if (bullet.extractor[i].rec.y + varHolder::bulletOffset() < enemy_body.extractor[j].spritePosition.y + (spriteDimension * enemy_body.extractor[j].spriteScale) && bullet.extractor[i].rec.x + varHolder::bulletOffset() > enemy_body.extractor[j].spritePosition.x  && bullet.extractor[i].rec.x + bullet.extractor[i].rec.width < enemy_body.extractor[j].spritePosition.x + (spriteDimension * enemy_body.extractor[j].spriteScale))
+			if (bullet.extractor[i].rec.y < enemy_body.extractor[j].spritePosition.y + (spriteDimension * enemy_body.extractor[j].spriteScale) && bullet.extractor[i].rec.x > enemy_body.extractor[j].spritePosition.x  && bullet.extractor[i].rec.x + bullet.extractor[i].rec.width < enemy_body.extractor[j].spritePosition.x + (spriteDimension * enemy_body.extractor[j].spriteScale))
 			{
 				enemy_body.extractor[j].health -= bullet.extractor[i].damage; 
 				DrawText(TextFormat("Enemy_HEALTH: %f", enemy_body.extractor[j].health), 50, 50, 50, WHITE);
-				bullet.resetBullet(bullet.extractor[i]);
+				//bullet.resetBullet(bullet.extractor[i]);
 				if (enemy_body.extractor[j].health == 0.00f)
 				{
 					DrawText("Object Collided Bottom Part", 200, 500, 15, WHITE);
@@ -38,7 +38,7 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 				{
 					DrawText(" Out of Bounds ", 200, 500, 15, WHITE);
 				}
-				if (bullet.extractor[i].rec.y + bullet.extractor[i].rec.width < 0)
+				if (bullet.extractor[i].rec.y + bullet.extractor[i].rec.width < -GetScreenHeight())
 				{
 					bullet.resetBullet(bullet.extractor[i]);
 				}

@@ -21,9 +21,9 @@ private:
 public:
 	
 	BulletManager bullet;
-	Vector2 getPointTop();
-	Vector2 getPointRight();
-	Vector2 getPointLeft();
+	Vector2 getPointTop() const;
+	Vector2 getPointRight() const;
+	Vector2 getPointLeft() const;
 
 	float& getHealth();
 	
@@ -48,7 +48,4 @@ public:
 
 	
 	//std::vector<Bullet> handler;
-	
-	
-	
 };

@@ -16,6 +16,12 @@ Game::Game()
 	velocity = 0;
 }
 
+Game::~Game() noexcept
+{
+	enemy.~EnemyManager();
+	ship.~Player_Ship();
+}
+
 void Game::userInput()
 {
 	if (IsKeyDown(KEY_W))
@@ -81,11 +87,13 @@ void Game::Draw()
 //Create a mechanics for gaming
 void Game::gameMechanics()
 {
-	enemy.enemyUpdate(ship);
-	collision.check_collision(enemy, bullet,ship);
 	if (gameOver == true)
 	{
 		enemy.resetFullEnemy();
 		ship.ResetShip();
+	}
+	else {
+		enemy.enemyUpdate(ship);
+		collision.check_collision(enemy, bullet, ship);
 	}
 }

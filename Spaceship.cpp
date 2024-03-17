@@ -23,7 +23,7 @@ Player_Ship::Player_Ship()
 
 Player_Ship::~Player_Ship()
 {
-
+	std::cout << "OBJECT DESTROYED(SHIP)\n";
 }
 
 void Player_Ship::ResetShip()
@@ -31,25 +31,25 @@ void Player_Ship::ResetShip()
 	point_Top = { 0, 0 };
 	point_Left = { 0 , 0 };
 	point_Right = { 0, 0 };
-	speed = 250.0f;
+	speed = 0.0f;
 	gravity_Y = 9.08f;
 	gravity_X = 0.0f;
-	health = 100.0f;
+	health = 0.0f;
 }
 
 
-Vector2 Player_Ship::getPointTop()
+Vector2 Player_Ship::getPointTop() const
 {
 	return point_Top;
 }
 
 
-Vector2 Player_Ship::getPointRight()
+Vector2 Player_Ship::getPointRight() const
 {
 	return point_Right;
 }
 
-Vector2 Player_Ship::getPointLeft()
+Vector2 Player_Ship::getPointLeft() const
 {
 	return point_Left;
 }
@@ -183,7 +183,14 @@ void BulletManager::resetBullet(Bullet& getBullet)
 	getBullet.bulletSpeed = 0;
 	getBullet.color = BLACK;
 	getBullet.bulletAlive = false;
-	pool.push_back(getBullet);
+	if (pool.size() == 20)
+	{
+		pool.pop_back();
+	}
+	else {
+		pool.push_back(getBullet);
+	}
+	
 }
 
 void BulletManager::deleteBulletFromContainer(Bullet* getBullet)
@@ -244,7 +251,6 @@ BulletManager::Bullet BulletManager::getBullet()
 	{
 		std::cout << "EMPTY!!! ";
 		pool = bullet_Pool();
-		
 	}
 
 	for (int i = 0; i < pool.size(); ++i)

@@ -31,7 +31,7 @@ private:
 	
 public:
 	EnemyManager();
-	~EnemyManager();
+	~EnemyManager() noexcept;
 
 	void Draw();
 	void enemyUpdate(Player_Ship& getShip);

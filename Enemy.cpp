@@ -25,6 +25,7 @@ EnemyManager::~EnemyManager()
 	{
 		extractor.pop_back();
 	}
+	std::cout << "OBJECT DESTROYED(ENEMYMAN)\n";
 }
 
 EnemyManager::enemy::enemy(float dmg, Vector2 position, float rotation, float scale, Color color, bool active, int check)

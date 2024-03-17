@@ -23,5 +23,6 @@ int varHolder::collisionOffset()
 
 int varHolder::bulletOffset()
 {
-	return 20;
+	return 15;
 }
+

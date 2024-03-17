@@ -18,6 +18,7 @@ int main()
 		ClearBackground(BLACK);
 		game.Draw();
 		EndDrawing();
+
 	}
 
 	return 0;
