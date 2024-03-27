@@ -19,3 +19,4 @@ bool Window::gameShouldClose()
 	assert(GetWindowHandle());
 	return WindowShouldClose();
 }
+

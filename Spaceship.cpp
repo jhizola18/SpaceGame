@@ -5,7 +5,6 @@
 
 using namespace varHolder;
 
-//bool bulletActive;
 int magCount;
 
 Player_Ship::Player_Ship()
@@ -253,7 +252,7 @@ BulletManager::Bullet BulletManager::getBullet()
 		pool = bullet_Pool();
 	}
 
-	for (int i = 0; i < pool.size(); ++i)
+	for (unsigned int i = 0; i < pool.size(); ++i)
 	{
 		std::cout << " content of the pool: " << i << " ";
 	}

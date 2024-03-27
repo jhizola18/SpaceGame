@@ -1,27 +1,28 @@
 #include "Enums.h"
 
 
-int varHolder::clipSize()
+
+const int varHolder::clipSize()
 {
 	return 20;
 }
 
-int varHolder::enemySize()
+const int varHolder::enemySize()
 {
 	return 10;
 }
 
-int varHolder::enemyPool()
+const int varHolder::enemyPool()
 {
 	return 20;
 }
 
-int varHolder::collisionOffset()
+const int varHolder::collisionOffset()
 {
 	return 15;
 }
 
-int varHolder::bulletOffset()
+const int varHolder::bulletOffset()
 {
 	return 15;
 }

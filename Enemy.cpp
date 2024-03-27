@@ -16,12 +16,11 @@ EnemyManager::EnemyManager()
 
 EnemyManager::~EnemyManager()
 {
-	for (int i = 0; i < handlers.size(); ++i)
+	for (unsigned int i = 0; i < handlers.size(); ++i)
 	{
 		handlers.pop_back();
 	}
-
-	for (int j = 0; j < extractor.size(); ++j)
+	for (unsigned int j = 0; j < extractor.size(); ++j)
 	{
 		extractor.pop_back();
 	}
@@ -38,14 +37,14 @@ EnemyManager::enemy::enemy(float dmg, Vector2 position, float rotation, float sc
 	spriteScale(scale),
 	spriteRotation(rotation),
 	spriteActive(active),
-	spriteSpeed(GetRandomValue(2,4)),
+	spriteSpeed(GetRandomValue(100,250)),
 	checker(check)
 {
 }
 
 void EnemyManager::resetFullEnemy()
 {
-	for (int i = 0; i < extractor.size(); ++i)
+	for (unsigned int i = 0; i < extractor.size(); ++i)
 	{
 		extractor[i].spritePosition = { 0, 0 };
 		extractor[i].checker = 0;
@@ -88,7 +87,7 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 	{
 		std::cout << " Empty pool ";
 	}
-	for (int i = 0; i < extractor.size(); i++)
+	for (unsigned int i = 0; i < extractor.size(); i++)
 	{
 		if (fps > 148)
 		{
@@ -120,6 +119,7 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 //Calculating the distance between the enemy and the player and getting the magnitude of the Distance Vector || to make enemy move towards player
 void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
 {
+	float delta = GetFrameTime();
 	//centroid of the triangle
 	float new_X = ((getShip.getPointTop().x + getShip.getPointRight().x + getShip.getPointLeft().x) / 3.0f);
 	float new_Y = ((getShip.getPointTop().y + getShip.getPointRight().y + getShip.getPointLeft().y) / 3.0f);
@@ -133,8 +133,8 @@ void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
 	float normalized_V = sqrt((float)pow(x_distance, 2) + (float)pow(y_distance, 2));
 
 	//adding the calculated distance to the new position x,y of the enemy
-	getEnemy.spritePosition.y += (y_distance  /normalized_V) * getEnemy.spriteSpeed; 
-	getEnemy.spritePosition.x += (x_distance / normalized_V) * getEnemy.spriteSpeed; 
+	getEnemy.spritePosition.y +=((y_distance / normalized_V) * getEnemy.spriteSpeed) * delta;
+	getEnemy.spritePosition.x += ((x_distance / normalized_V) * getEnemy.spriteSpeed) * delta;
 }
 
 //reset enemy value to zero and putting back to the pool

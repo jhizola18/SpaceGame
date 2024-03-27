@@ -3,13 +3,14 @@
 
 extern int magCount;
 extern bool gameOver;
+extern enum Game_State { Start_Menu, Gameplay ,Pause, Option }game_state;
 
 namespace varHolder
 {
-	int clipSize();
-	int enemySize();
-	int enemyPool();
-	int collisionOffset();
-	int bulletOffset();
+	const int clipSize();
+	const int enemySize();
+	const int enemyPool();
+	const int collisionOffset();
+	const int bulletOffset();
 	
 };

@@ -65,7 +65,9 @@ void Game::userInput()
 		ship.gravityRight();
 	}
 
-	if (IsKeyPressed(KEY_E))
+
+
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 	{
 		positionY = ship.getPointTop().y;
 		positionX = ship.getPointTop().x;

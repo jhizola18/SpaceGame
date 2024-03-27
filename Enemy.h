@@ -2,7 +2,6 @@
 #include "raylib.h"
 #include <vector>
 #include <iostream>
-
 #include "Spaceship.h"
 #include <math.h>
 
@@ -27,7 +26,6 @@ private:
 	};
 	
 	enemy enemies;
-	
 	
 public:
 	EnemyManager();
