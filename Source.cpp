@@ -1,10 +1,11 @@
 #include "Window.h"
 #include "Game.h"
 #include "MenuManager.h"
-#include "Enums.h"
 
+bool pause = false;
 Game_State game_state = Start_Menu;
 Game_State prev_state = game_state;
+
 int main()
 {
 	constexpr int width = 600;
@@ -13,10 +14,10 @@ int main()
 	Window window{ width, height, 74, "SpaceGame" };
 	Menu menu = Menu();
 	Game game = Game();
-	
+	//Refactor the Switch Statement for pause play find a better solution
 	while (!window.gameShouldClose())
 	{
-		
+			
 		switch (game_state)
 		{
 		case Start_Menu:
@@ -25,11 +26,11 @@ int main()
 			if (menu.MenuBtn())
 			{
 				game_state = Gameplay;
-			}
+			};
 			if (menu.OptionBtn())
 			{
 				game_state = Option;
-			}
+			};
 			EndDrawing();
 			break;
 		case Gameplay:
@@ -37,10 +38,22 @@ int main()
 			BeginDrawing();
 			game.gameMechanics();
 			ClearBackground(BLACK);
-			if (menu.BackBtn())
+			if (menu.PauseBtn())
 			{
-				game_state = prev_state;
-			}
+				game_state = Pause;
+				pause = true;
+			};
+			game.Draw();
+			EndDrawing();
+			break;
+		case Pause:
+			BeginDrawing();
+			ClearBackground(BLACK);
+			if (menu.PlayBtn())
+			{
+				pause = false;
+				game_state = Gameplay;
+			};
 			game.Draw();
 			EndDrawing();
 			break;
@@ -50,10 +63,9 @@ int main()
 			if (menu.BackBtn())
 			{
 				game_state = prev_state;
-			}
-			
+			};
 			EndDrawing();
-
+			break;
 		default:
 			break;
 		}

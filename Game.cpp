@@ -22,6 +22,7 @@ Game::~Game() noexcept
 	ship.~Player_Ship();
 }
 
+
 void Game::userInput()
 {
 	if (IsKeyDown(KEY_W))
@@ -80,11 +81,9 @@ void Game::userInput()
 
 void Game::Draw()
 {
-	
 	bullet.drawBullet();
 	enemy.Draw();
 	ship.Draw();
-	
 }
 //Create a mechanics for gaming
 void Game::gameMechanics()

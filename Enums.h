@@ -3,8 +3,8 @@
 
 extern int magCount;
 extern bool gameOver;
-extern enum Game_State { Start_Menu, Gameplay ,Pause, Option }game_state;
-
+extern enum Game_State { Start_Menu, Gameplay ,Pause,Play ,Option }game_state;
+extern bool pause;
 namespace varHolder
 {
 	const int clipSize();

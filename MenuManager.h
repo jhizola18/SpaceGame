@@ -13,4 +13,6 @@ public:
 	bool MenuBtn();
 	bool OptionBtn();
 	bool BackBtn();
+	bool PauseBtn();
+	bool PlayBtn();
 };

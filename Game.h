@@ -14,6 +14,7 @@ private:
 public:
 	Game();
 	~Game()noexcept;
+
 	void userInput();
 	void Draw();
 	void gameMechanics();

@@ -1,6 +1,7 @@
 #include "MenuManager.h"
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+
 Menu::Menu()
 {
 }
@@ -43,4 +44,23 @@ bool Menu::BackBtn()
 	return false;
 }
 
-//Continue Creating GUI
+bool Menu::PauseBtn()
+{
+	if (GuiButton({ 20.0f, 20.0f, 50.0f,50.0f }, GuiIconText(ICON_PLAYER_PAUSE, " ")))
+	{
+			return true;
+	}
+	return false;
+}
+
+bool Menu::PlayBtn()
+{
+	if (GuiButton({ 20.0f, 20.0f, 50.0f,50.0f }, GuiIconText(ICON_PLAYER_PLAY, " ")))
+	{
+		return true;
+	}
+	return false;
+}
+
+
+

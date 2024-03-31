@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include<vector>
 #include "Bullet.h"
-
+#include "Enums.h"
 
 
 class Player_Ship {

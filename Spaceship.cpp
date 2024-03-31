@@ -1,7 +1,7 @@
 #include "Spaceship.h"
 #include <iostream>
 #include "assert.h"
-#include "Enums.h"
+
 
 using namespace varHolder;
 
@@ -67,52 +67,110 @@ void Player_Ship::Draw()
 void Player_Ship::moveForward()
 {
 	float deltaF = GetFrameTime();
-	point_Top.y -= speed * deltaF;
-	point_Left.y -= speed * deltaF;
-	point_Right.y -= speed * deltaF;
-	gravity_Y++;
+	if (!pause)
+	{
+		point_Top.y -= speed * deltaF;
+		point_Left.y -= speed * deltaF;
+		point_Right.y -= speed * deltaF;
+		gravity_Y++;
+	}
+	else {
+		point_Top.y -= 0;
+		point_Left.y -= 0;
+		point_Right.y -= 0;
+		gravity_Y++;
+	}
+	
 }
 void Player_Ship::gravityForward()
 {
 	float deltaF = GetFrameTime();
-	point_Top.y -= gravity_Y * deltaF;
-	point_Left.y -= gravity_Y * deltaF;
-	point_Right.y -= gravity_Y * deltaF;
+	if (!pause)
+	{
+		point_Top.y -= gravity_Y * deltaF;
+		point_Left.y -= gravity_Y * deltaF;
+		point_Right.y -= gravity_Y * deltaF;
+	}
+	else {
+		point_Top.y -= 0;
+		point_Left.y -= 0;
+		point_Right.y -= 0;
+	}
+	
 }
 
 void Player_Ship::moveBackward()
 {
 	float deltaB = GetFrameTime();
-	point_Top.y += speed * deltaB;
-	point_Left.y += speed * deltaB;
-	point_Right.y += speed * deltaB;
-	gravity_Y--;
+	if (!pause)
+	{
+		point_Top.y += speed * deltaB;
+		point_Left.y += speed * deltaB;
+		point_Right.y += speed * deltaB;
+		gravity_Y--;
+	}
+	else {
+		point_Top.y += 0;
+		point_Left.y += 0;
+		point_Right.y += 0;
+		gravity_Y--;
+	}
+	
 }
 
 void Player_Ship::gravityBackward()
 {
 	float deltaB = GetFrameTime();
-	point_Top.y -= gravity_Y * deltaB;
-	point_Left.y -= gravity_Y * deltaB;
-	point_Right.y -= gravity_Y * deltaB;
+	if (!pause)
+	{
+		point_Top.y -= gravity_Y * deltaB;
+		point_Left.y -= gravity_Y * deltaB;
+		point_Right.y -= gravity_Y * deltaB;
+	}
+	else {
+		point_Top.y -= 0;
+		point_Left.y -= 0;
+		point_Right.y -= 0;
+	}
+	
 }
 
 
 void Player_Ship::moveLeft()
 {
 	float deltaL = GetFrameTime();
-	point_Top.x -= speed * deltaL;
-	point_Left.x -= speed * deltaL;
-	point_Right.x -= speed * deltaL;
-	gravity_X++;
+	if (!pause)
+	{
+		point_Top.x -= speed * deltaL;
+		point_Left.x -= speed * deltaL;
+		point_Right.x -= speed * deltaL;
+		gravity_X++;
+	}
+	else {
+		point_Top.x -= 0;
+		point_Left.x -= 0;
+		point_Right.x -= 0;
+		gravity_X++;
+	}
+	
 }
 
 void Player_Ship::gravityLeft()
 {
 	float deltaL = GetFrameTime();
-	point_Top.x -= gravity_X  * deltaL;
-	point_Left.x -= gravity_X * deltaL;
-	point_Right.x -= gravity_X * deltaL;
+	if (!pause)
+	{
+		point_Top.x -= gravity_X * deltaL;
+		point_Left.x -= gravity_X * deltaL;
+		point_Right.x -= gravity_X * deltaL;
+
+	}
+	else {
+		point_Top.x -= 0;
+		point_Left.x -= 0;
+		point_Right.x -= 0;
+	}
+	
 	
 }
 
@@ -120,18 +178,37 @@ void Player_Ship::gravityLeft()
 void Player_Ship::moveRight()
 {
 	float deltaR = GetFrameTime();
-	point_Top.x += speed * deltaR;
-	point_Left.x += speed * deltaR;
-	point_Right.x += speed * deltaR;
-	gravity_X--;
+	if (!pause)
+	{
+		point_Top.x += speed * deltaR;
+		point_Left.x += speed * deltaR;
+		point_Right.x += speed * deltaR;
+		gravity_X--;
+	}
+	else {
+		point_Top.x += 0;
+		point_Left.x += 0;
+		point_Right.x += 0;
+		gravity_X--;
+	}
+	
 }
 
 void Player_Ship::gravityRight()
 {
 	float deltaR = GetFrameTime();
-	point_Top.x -= gravity_X * deltaR;
-	point_Left.x -= gravity_X * deltaR;
-	point_Right.x -= gravity_X * deltaR;
+	if (!pause)
+	{
+		point_Top.x -= gravity_X * deltaR;
+		point_Left.x -= gravity_X * deltaR;
+		point_Right.x -= gravity_X * deltaR;
+	}
+	else {
+		point_Top.x -= 0;
+		point_Left.x -= 0;
+		point_Right.x -= 0;
+	}
+	
 }
 
 
@@ -192,12 +269,6 @@ void BulletManager::resetBullet(Bullet& getBullet)
 	
 }
 
-void BulletManager::deleteBulletFromContainer(Bullet* getBullet)
-{
-	std::cout << " DELETING BULLET OBJECT: \n";
-	delete[] getBullet;
-}
-
 
 void BulletManager::drawBullet()
 {
@@ -234,11 +305,20 @@ void BulletManager::updateBullet(float posX, float posY, Bullet getBullet)
 
 void BulletManager::bulletMovement()//int speed)
 {
-	
-	for(auto& item : extractor)
+	if (!pause)
 	{
-		item.rec.y -= item.bulletSpeed;
+		for (auto& item : extractor)
+		{
+			item.rec.y -= item.bulletSpeed;
+		}
 	}
+	else {
+		for (auto& item : extractor)
+		{
+			item.rec.y -= 0;
+		}
+	}
+	
 }
 
 

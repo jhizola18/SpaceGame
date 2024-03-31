@@ -29,7 +29,6 @@ public:
 
 	Bullet getBullet();
 	void resetBullet(Bullet& getBullet);
-	void deleteBulletFromContainer(Bullet* getBullet);
 	std::deque<Bullet> bullet_Pool(); 
 	std::deque<Bullet> extractor;
 	std::deque<Bullet> pool;
