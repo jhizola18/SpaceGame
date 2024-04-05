@@ -20,9 +20,6 @@ private:
 		float health;
 		float damage;
 		enemy(float dmg, Vector2 position,float rotation,float scale, Color color, bool active, int check);
-		
-
-		
 	};
 	
 	enemy enemies;
@@ -33,8 +30,6 @@ public:
 
 	void Draw();
 	void enemyUpdate(Player_Ship& getShip);
-	//void resetEnemy(enemy getEnemy);
-	//void addingEnemyObj();
 	std::vector<enemy> getEnemy();
 	void resetEnemy(enemy& getEnemy);
 	void resetFullEnemy();
@@ -42,5 +37,5 @@ public:
 	std::vector <enemy> enemyPooling();
 	std::vector <enemy> extractor;
 	std::vector <enemy> handlers;
-	enemy enemyMove;
+	
 };

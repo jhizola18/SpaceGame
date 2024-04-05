@@ -9,12 +9,12 @@ const int varHolder::clipSize()
 
 const int varHolder::enemySize()
 {
-	return 10;
+	return 5;
 }
 
 const int varHolder::enemyPool()
 {
-	return 20;
+	return 15;
 }
 
 const int varHolder::collisionOffset()

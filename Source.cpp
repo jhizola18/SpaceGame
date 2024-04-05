@@ -12,17 +12,19 @@ int main()
 	constexpr int height = 800;
 
 	Window window{ width, height, 74, "SpaceGame" };
+	
 	Menu menu = Menu();
 	Game game = Game();
 	//Refactor the Switch Statement for pause play find a better solution
 	while (!window.gameShouldClose())
 	{
-			
+		BeginDrawing();
+		ClearBackground(BLACK);
+		menu.Background(0,0,WHITE);
 		switch (game_state)
 		{
 		case Start_Menu:
-			BeginDrawing();
-			menu.MainMenu();
+			
 			if (menu.MenuBtn())
 			{
 				game_state = Gameplay;
@@ -31,11 +33,11 @@ int main()
 			{
 				game_state = Option;
 			};
-			EndDrawing();
+			
 			break;
 		case Gameplay:
 			game.userInput();
-			BeginDrawing();
+		
 			game.gameMechanics();
 			ClearBackground(BLACK);
 			if (menu.PauseBtn())
@@ -44,34 +46,32 @@ int main()
 				pause = true;
 			};
 			game.Draw();
-			EndDrawing();
+			
 			break;
 		case Pause:
-			BeginDrawing();
-			ClearBackground(BLACK);
+			
 			if (menu.PlayBtn())
 			{
 				pause = false;
 				game_state = Gameplay;
 			};
 			game.Draw();
-			EndDrawing();
+			
 			break;
 		case Option:
-			BeginDrawing();
-			ClearBackground(BLUE);
+			
 			if (menu.BackBtn())
 			{
 				game_state = prev_state;
 			};
-			EndDrawing();
+			
 			break;
 		default:
 			break;
 		}
-		
+		EndDrawing();
 	}
-
+	
 
 	return 0;
 }

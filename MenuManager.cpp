@@ -4,10 +4,13 @@
 
 Menu::Menu()
 {
+	Image imahe = LoadImage("Image/game_bg.png");
+	background = LoadTextureFromImage(imahe);
 }
 
 Menu::~Menu()
 {
+	UnloadTexture(background);
 }
 
 void Menu::MainMenu()
@@ -61,6 +64,12 @@ bool Menu::PlayBtn()
 	}
 	return false;
 }
+
+void Menu::Background(int posx, int posy, Color tint)
+{
+	DrawTexture(background ,posx, posy, tint);
+}
+
 
 
 

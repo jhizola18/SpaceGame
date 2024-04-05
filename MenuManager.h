@@ -4,6 +4,8 @@
 
 
 class Menu {
+private:
+	Texture2D background;
 
 public:
 	Menu();
@@ -15,4 +17,5 @@ public:
 	bool BackBtn();
 	bool PauseBtn();
 	bool PlayBtn();
+	void Background(int posx, int posy, Color tint);
 };

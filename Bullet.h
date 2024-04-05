@@ -26,12 +26,11 @@ public:
 	void bulletMovement();
 
 	BulletManager();
+	~BulletManager()noexcept;
 
 	Bullet getBullet();
 	void resetBullet(Bullet& getBullet);
 	std::deque<Bullet> bullet_Pool(); 
 	std::deque<Bullet> extractor;
 	std::deque<Bullet> pool;
-	//std::vector<Bullet>::iterator it;
-	
 };

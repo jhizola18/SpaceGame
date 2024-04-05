@@ -251,6 +251,14 @@ BulletManager::BulletManager()
 	pool = bullet_Pool();
 }
 
+BulletManager::~BulletManager() noexcept
+{
+	for (int i = 0; i < pool.size();++i)
+	{
+		pool.pop_back();
+	}
+}
+
 void BulletManager::resetBullet(Bullet& getBullet)
 {
 	getBullet.id = 0;
