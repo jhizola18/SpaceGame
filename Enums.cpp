@@ -27,3 +27,8 @@ const int varHolder::bulletOffset()
 	return 15;
 }
 
+Vector2 varHolder::cursorPosition()
+{
+	return{GetMousePosition().x, GetMousePosition().y};
+}
+

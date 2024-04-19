@@ -12,5 +12,6 @@ namespace varHolder
 	const int enemyPool();
 	const int collisionOffset();
 	const int bulletOffset();
+	Vector2 cursorPosition();
 	
 };

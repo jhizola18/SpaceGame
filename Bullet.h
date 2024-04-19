@@ -23,7 +23,7 @@ public:
 	
 	void drawBullet();
 	void updateBullet(float posX, float posY, Bullet getBullet);
-	void bulletMovement();
+	void bulletMovement(Vector2 target, float dist);
 
 	BulletManager();
 	~BulletManager()noexcept;

@@ -1,6 +1,7 @@
 #include "MenuManager.h"
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+#include "enums.h"
 
 Menu::Menu()
 {
@@ -16,6 +17,11 @@ Menu::~Menu()
 void Menu::MainMenu()
 {
 	GuiPanel({0,0,(float)GetScreenWidth(), (float)GetScreenHeight()},"Sample");
+}
+
+void Menu::DrawCursor()
+{
+	DrawRectangleLines(varHolder::cursorPosition().x, varHolder::cursorPosition().y, 12, 12, WHITE);
 }
 
 bool Menu::MenuBtn()

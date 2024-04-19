@@ -14,6 +14,7 @@ private:
 	float gravity_Y;
 	float gravity_X;
 	float speed;
+	Vector2 position;
 	float health;
 
 	
@@ -31,6 +32,8 @@ public:
 	void ResetShip();
 
 	void Draw();
+	
+	void rotationShip();
 
 	void moveForward();
 	void gravityForward();

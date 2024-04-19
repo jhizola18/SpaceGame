@@ -132,7 +132,7 @@ void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
 	float normalized_V = sqrt((float)pow(x_distance, 2) + (float)pow(y_distance, 2));
 
 	//adding the calculated distance to the new position x,y of the enemy
-	getEnemy.spritePosition.y +=((y_distance / normalized_V) * getEnemy.spriteSpeed) * delta;
+	getEnemy.spritePosition.y += ((y_distance / normalized_V) * getEnemy.spriteSpeed) * delta;
 	getEnemy.spritePosition.x += ((x_distance / normalized_V) * getEnemy.spriteSpeed) * delta;
 }
 

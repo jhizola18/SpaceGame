@@ -10,7 +10,7 @@ private:
 public:
 	Menu();
 	~Menu();
-
+	void DrawCursor();
 	void MainMenu();
 	bool MenuBtn();
 	bool OptionBtn();

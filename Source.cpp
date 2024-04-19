@@ -16,11 +16,14 @@ int main()
 	Menu menu = Menu();
 	Game game = Game();
 	//Refactor the Switch Statement for pause play find a better solution
+	HideCursor();
+	
 	while (!window.gameShouldClose())
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
 		menu.Background(0,0,WHITE);
+		menu.DrawCursor();
 		switch (game_state)
 		{
 		case Start_Menu:
@@ -37,7 +40,7 @@ int main()
 			break;
 		case Gameplay:
 			game.userInput();
-		
+
 			game.gameMechanics();
 			ClearBackground(BLACK);
 			if (menu.PauseBtn())

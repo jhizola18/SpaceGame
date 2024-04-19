@@ -70,13 +70,21 @@ void Game::userInput()
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 	{
+		//float new_X = ((ship.getPointTop().x + ship.getPointRight().x + ship.getPointLeft().x) / 3.0f);
+		//float new_Y = ((ship.getPointTop().y + ship.getPointRight().y + ship.getPointLeft().y) / 3.0f);
 		positionY = ship.getPointTop().y;
 		positionX = ship.getPointTop().x;
 		bullet.updateBullet(positionX, positionY, bullet.getBullet());
 	}
 	else {
-		bullet.bulletMovement();
+		bullet.bulletMovement(varHolder::cursorPosition(), 59.0f);
 	}
+
+	if (IsCursorOnScreen())
+	{
+		ship.rotationShip();
+	}
+	
 }
 
 void Game::Draw()
