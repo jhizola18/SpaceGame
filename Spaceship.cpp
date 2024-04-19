@@ -80,7 +80,7 @@ void Player_Ship::rotationShip()
 		float new_Y = ((point_Top.y + point_Right.y + point_Left.y) / 3.0f);
 		Vector2 center = {new_X, new_Y};
 
-		Vector2 Top_distance = Vector2Subtract(center, varHolder::cursorPosition());
+		Vector2 Top_distance = Vector2Subtract(varHolder::cursorPosition(), point_Top);
 		Vector2 Right_distance = Vector2Subtract(center, varHolder::cursorPosition());
 		Vector2 Left_distance = Vector2Subtract(center, varHolder::cursorPosition());
 		
@@ -90,20 +90,20 @@ void Player_Ship::rotationShip()
 		camera.zoom = 1.0f;
 		camera.rotation = 0.0f;
 		Vector2 mousePos = GetScreenToWorld2D(varHolder::cursorPosition(), camera);
-		Vector2 DirectionT = Vector2Subtract(center, mousePos);
+		Vector2 DirectionT = Vector2Subtract(mousePos, point_Top);
 		Vector2 DirectionR = Vector2Subtract(center, mousePos);
 		Vector2 DirectionL = Vector2Subtract(center, mousePos);
-		float angleT = atan2f(DirectionT.y, DirectionT.x);//Vector2Angle(DirectionT, mousePos) * DEG2RAD;
+		float angleT = Vector2Angle(mousePos, mousePos) * DEG2RAD;//Vector2Angle(DirectionT, mousePos) * DEG2RAD;
 		float angleR = atan2f(DirectionR.y, DirectionR.x);
 		float angleL = atan2f(DirectionL.y, DirectionL.x);//Vector2Angle(DirectionR, mousePos) * DEG2RAD;
 		//float angleL = Vector2Angle({ Left_distanceX, Left_distanceY }, mousePos) * DEG2RAD;
 
-		//float directionT = sqrt((Top_distanceX * Top_distanceX) + (Top_distanceY * Top_distanceY));
+		float magT = sqrt((Top_distance.x * Top_distance.x) + (Top_distance.y * Top_distance.y));
 		//float directionR = sqrt((Right_distanceX * Right_distanceX) + (Right_distanceY * Right_distanceY));
 		//float directionL = sqrt((Left_distanceX * Left_distanceX) + (Left_distanceY * Left_distanceY));
 		
-		//float magnitudeTX = Top_distanceX / directionT * speed * GetFrameTime();
-		//float magnitudeTY = Top_distanceY / directionT;
+		float magnitudeTX = Top_distance.x / magT;
+		float magnitudeTY = Top_distance.y / magT;
 
 		//float magnitudeRX = Right_distanceX / directionR;
 		//float magnitudeRY = Right_distanceY / directionR;
@@ -112,8 +112,8 @@ void Player_Ship::rotationShip()
 		//float magnitudeLY = Left_distanceY / directionL;
 		
 		
-		point_Top.x -= DirectionT.x * -cos(angleT) * speed * GetFrameTime();
-		point_Top.y -= DirectionT.y * sin(angleT) * speed * GetFrameTime();
+		point_Top.x -= magnitudeTX * -cos(angleT) * speed * GetFrameTime();
+		point_Top.y -= magnitudeTY * sin(angleT) * speed * GetFrameTime();
 		//point_Top = Vector2Rotate(DirectionT, angleT);
 		//point_Right = Vector2Rotate(DirectionR, angleR);
 		//point_Left = Vector2Rotate(DirectionL, angleL);
