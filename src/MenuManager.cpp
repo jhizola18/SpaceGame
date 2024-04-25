@@ -37,6 +37,9 @@ bool Menu::MenuBtn()
 
 	return false;
 }
+
+
+
 bool Menu::OptionBtn()
 {
 	if (GuiButton({ (float)GetScreenWidth() / 3, (float)GetScreenHeight() / 2, 200.0f,50.0f }, GuiIconText(ICON_GEAR, "Option")))
@@ -75,15 +78,28 @@ bool Menu::PlayBtn()
 	return false;
 }
 
+
 bool Menu::Replay()
 {
-	if (GuiButton({ (float)GetScreenWidth() / 3, (float)GetScreenHeight() / 2, 200.0f,50.0f }, GuiIconText(ICON_PLAYER_PREVIOUS, "REPLAY")))
+
+	DrawText("GAME OVER!", (float)GetScreenWidth() / 2.5, (float)GetScreenHeight() /2.5, 20, WHITE);
+
+	if (GuiButton({ 210, (float)GetScreenHeight() / 2, 200.0f,50.0f }, GuiIconText(ICON_PLAYER_PREVIOUS, "REPLAY")))
 	{
 		return true;
 	}
 	return false;
 }
 
+bool Menu::MenuBackBtn()
+{
+	if (GuiButton({ 210, 550, 200.0f,50.0f }, GuiIconText(ICON_PLAYER_PLAY, "RETURN TO MAIN MENU")))
+	{
+		return true;
+	}
+
+	return false;
+}
 
 void Menu::Background(int posx, int posy, Color tint)
 {

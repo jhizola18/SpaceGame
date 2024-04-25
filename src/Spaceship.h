@@ -50,5 +50,4 @@ public:
 	void gravityRight();
 	void gravityReset();
 
-	//std::vector<Bullet> handler;
 };

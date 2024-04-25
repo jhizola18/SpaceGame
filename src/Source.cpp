@@ -81,6 +81,11 @@ int main()
 				game_state = Gameplay;
 				gameOver = false;
 			}
+			if (menu.MenuBackBtn())
+			{
+				game_state = Start_Menu;
+				gameOver = false;
+			}
 			break;
 		default:
 			break;

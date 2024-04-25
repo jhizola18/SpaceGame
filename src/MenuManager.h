@@ -14,6 +14,7 @@ public:
 	void DrawCursor();
 	void MainMenu();
 	bool MenuBtn();
+	bool MenuBackBtn();
 	bool OptionBtn();
 	bool BackBtn();
 	bool PauseBtn();
