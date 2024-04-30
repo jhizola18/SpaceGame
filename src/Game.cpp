@@ -8,7 +8,8 @@ int index = 0;
 
 Game::Game()
 	:
-	bullet()
+	bullet(),
+	enemy()
 {
 	positionX = ship.getPointTop().x;
 	positionY = ship.getPointTop().y;
@@ -94,6 +95,8 @@ void Game::Draw()
 	enemy.Draw();
 	ship.Draw();
 }
+
+
 //Create a mechanics for gaming
 void Game::gameMechanics()
 {
@@ -106,4 +109,5 @@ void Game::gameMechanics()
 		enemy.enemyUpdate(ship);
 		collision.check_collision(enemy, bullet, ship);
 	}
+	
 }

@@ -103,21 +103,12 @@ bool Menu::MenuBackBtn()
 
 void Menu::Background(int posx, int posy, Color tint)
 {
-	//Open the file and read what's inside it
-	std::ifstream OpenFile("High-score.txt");
-	if (OpenFile.is_open())
-	{
-		OpenFile >> HighScore;
-		
-		OpenFile.close();
-	};
 	DrawTexture(background, posx, posy, tint);
-	DrawText(TextFormat("Score: %i", Destroyed), 50, 750, 15, WHITE);
-	DrawText(TextFormat("High-Score: %i", HighScore), 50, 700, 15, WHITE);
 }
 
 void Menu::Player_Score()
 {
+	
 	if (Destroyed > HighScore && gameOver)
 	{
 		//Create a File and write the High Score for a Player
@@ -139,6 +130,19 @@ void Menu::Player_Score()
 		}
 		
 	}
+}
+
+void Menu::showScore()
+{
+	std::ifstream OpenFile("High-score.txt");
+	if (OpenFile.is_open())
+	{
+		OpenFile >> HighScore;
+
+		OpenFile.close();
+	};
+	DrawText(TextFormat("Score: %i", Destroyed), 50, 750, 15, WHITE);
+	DrawText(TextFormat("High-Score: %i", HighScore), 50, 700, 15, WHITE);
 }
 
 

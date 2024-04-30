@@ -1,5 +1,6 @@
 #pragma once
 #include"raylib.h"
+#include "unordered_map"
 
 extern int magCount;
 extern bool gameOver;

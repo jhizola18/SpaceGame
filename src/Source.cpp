@@ -25,7 +25,6 @@ int main()
 		ClearBackground(BLACK);
 		menu.Background(0,0,WHITE);
 		menu.DrawCursor();
-		menu.Player_Score();
 		switch (game_state)
 		{
 		case Start_Menu:
@@ -38,11 +37,11 @@ int main()
 			{
 				game_state = Option;
 			};
-			
 			break;
 		case Gameplay:
 			game.userInput();
 			game.gameMechanics();
+			menu.Player_Score();
 			ClearBackground(BLACK);
 			if (menu.PauseBtn())
 			{
@@ -54,6 +53,7 @@ int main()
 				game.resetGame();
 				game_state = GameOver;
 			}
+			menu.showScore();
 			game.Draw();
 			break;
 		case Pause:
@@ -63,6 +63,7 @@ int main()
 				pause = false;
 				game_state = Gameplay;
 			};
+			menu.showScore();
 			game.Draw();
 			break;
 		case Option:
@@ -74,17 +75,20 @@ int main()
 			
 			break;
 		case GameOver:
+			menu.showScore();
 			game.resetGame();
 			if (menu.Replay())
 			{
-				Destroyed = 0;
 				game_state = Gameplay;
 				gameOver = false;
+				Destroyed = 0;
+				
 			}
 			if (menu.MenuBackBtn())
 			{
 				game_state = Start_Menu;
 				gameOver = false;
+				Destroyed = 0;
 			}
 			break;
 		default:

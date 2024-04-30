@@ -27,7 +27,7 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 				enemy_body.extractor[j].health -= bullet.extractor[i].damage; 
 				DrawText(TextFormat("Enemy_HEALTH: %f", enemy_body.extractor[j].health), 50, 50, 50, WHITE);
 				bullet.resetBullet(bullet.extractor[i]);
-				if (enemy_body.extractor[j].health == 0.00f)
+				if (enemy_body.extractor[j].health <= 0.00f)
 				{
 					DrawText("Object Collided Bottom Part", 200, 500, 15, WHITE);
 					bullet.resetBullet(bullet.extractor[i]);
@@ -60,7 +60,6 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 				bullet.extractor.erase(bullet.extractor.begin() + i);
 			}
 		}
-		
 	}
 
 	
@@ -69,7 +68,7 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 	float new_Y = ((ship_body.getPointTop().y + ship_body.getPointRight().y + ship_body.getPointLeft().y) / 3);
 	//enemy-player collision
 	
-
+	//detect collision between enemy to player and apply damage
 	for (unsigned int check = 0; check < enemy_body.extractor.size(); ++check)
 	{
 		if (new_X > enemy_body.extractor[check].spritePosition.x && new_X  < enemy_body.extractor[check].spritePosition.x + (enemy_body.extractor[check].spriteScale * spriteDimension) && new_Y  > enemy_body.extractor[check].spritePosition.y && new_Y  < enemy_body.extractor[check].spritePosition.y + (enemy_body.extractor[check].spriteScale * spriteDimension))
@@ -79,7 +78,7 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 			DrawText(TextFormat("Player Health: %f", ship_body.getHealth()), 50, 50, 50, WHITE);
 			enemy_body.resetEnemy(enemy_body.extractor[check]);
 			DrawText(" HIT ", 200, 500, 15, WHITE);
-			if (ship_body.getHealth() == 0.0f)
+			if (ship_body.getHealth() <= 0.0f)
 			{
 				gameOver = true;
 				DrawText("Player Dead ", 200, 500, 15, WHITE);
@@ -87,6 +86,6 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 			}
 		}
 	}
-
+	DrawText(TextFormat("Health: %f", ship_body.getHealth()),new_X, new_Y, 20 ,WHITE);
 }
 		

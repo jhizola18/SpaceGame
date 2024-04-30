@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Enums.h"
 
+//Think of ways to implement buffed enemy
 using namespace varHolder;
 
 int fps = 0;
@@ -104,14 +105,29 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 			int maxX = GetScreenWidth() - 50;
 			Vector2 Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
 			float Scale = 1.5f;
-			float damage = 20.0f;
+			float damageS = 20.0f;
+
+			if (Destroyed >= 15)
+			{
+				damageS = 50.0f;
+			}
+			else {
+				minY = -5;
+				maxY = -5;
+				minX = 0;
+				maxX = GetScreenWidth() - 50;
+				Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
+				Scale = 1.5f;
+				damageS = 20.0f;
+			}
+			
 			
 
 			if (extractor[i].spriteActive == false)
 			{
 				if (extractor[i].spriteScale == 0 && extractor[i].spritePosition.x == 0 && extractor[i].spritePosition.y == 0)
 				{
-					extractor[i].damage = damage;
+					extractor[i].damage = damageS;
 					extractor[i].spriteScale = Scale;
 					extractor[i].spritePosition = Position;
 					extractor[i].spriteActive = true;
@@ -137,11 +153,14 @@ void EnemyManager::enemyMovement(enemy& getEnemy, Player_Ship& getShip)
 	float x_distance = new_X - (getEnemy.spritePosition.x + ((getEnemy.spriteScale * spriteDimension) /2.0f));
 	float y_distance = new_Y - (getEnemy.spritePosition.y + ((getEnemy.spriteScale * spriteDimension) / 2.0f));
 	//normalizing the vector || magnitude of a vector
-	float normalized_V = sqrt((float)pow(x_distance, 2) + (float)pow(y_distance, 2));
+	float magnitudeV = sqrt((float)pow(x_distance, 2) + (float)pow(y_distance, 2));
+
+	float norm_X = x_distance / abs(magnitudeV);
+	float norm_Y = y_distance / abs(magnitudeV);
 
 	//adding the calculated distance to the new position x,y of the enemy
-	getEnemy.spritePosition.y += ((y_distance / normalized_V) * getEnemy.spriteSpeed) * delta;
-	getEnemy.spritePosition.x += ((x_distance / normalized_V) * getEnemy.spriteSpeed) * delta;
+	getEnemy.spritePosition.y += (norm_Y * getEnemy.spriteSpeed) * delta;
+	getEnemy.spritePosition.x += (norm_X * getEnemy.spriteSpeed) * delta;
 }
 
 //reset enemy value to zero and putting back to the pool

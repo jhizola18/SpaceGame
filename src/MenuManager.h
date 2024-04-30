@@ -22,4 +22,5 @@ public:
 	bool Replay();
 	void Background(int posx, int posy, Color tint);
 	void Player_Score();
+	void showScore();
 };
