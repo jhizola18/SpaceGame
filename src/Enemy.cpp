@@ -1,8 +1,10 @@
 #include "Enemy.h"
 #include "Enums.h"
+#include "unordered_map"
 
 //Think of ways to implement buffed enemy
 using namespace varHolder;
+Level_State level_state;
 
 int fps = 0;
 
@@ -49,6 +51,7 @@ EnemyManager::enemy::enemy(float dmg, Vector2 position, float rotation, float sc
 
 void EnemyManager::resetFullEnemy()
 {
+	level_state = Level1;
 	for (unsigned int i = 0; i < extractor.size(); ++i)
 	{
 		extractor[i].spritePosition = { 0, 0 };
@@ -95,38 +98,77 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 	{
 		std::cout << " Empty pool ";
 	}
+
+	int minY = -5;
+	int maxY = -5;
+	int minX = -5;
+	int maxX = 0;
+	Vector2 Position = { 0.0f, 0.0f };
+	float Scale = 0.0f;
+	float damageS = 0.0f;
+	int health = 0;
+	//LEVEL TRY TO CREATE AN ENDLESS LEVEL USING MATH TO CALCULATE
+	switch (level_state)
+	{
+	case Level1:
+		minY = -5;
+		maxY = -5;
+		minX = 0;
+		maxX = GetScreenWidth() - 50;
+		Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
+		Scale = 1.5f;
+		damageS = 20.0f;
+		health = 100;
+		if (Destroyed == 15)
+		{
+			DrawText("LEVEL 2", 400, 400, 20, WHITE);
+			level_state = Level2;
+		}
+		break;
+	case Level2:
+		minY = -5;
+		maxY = -5;
+		minX = 0;
+		maxX = GetScreenWidth() - 50;
+		Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
+		Scale = 1.2f;
+		damageS = 30.0f;
+		health = 150.0f;
+		if (Destroyed == 30)
+		{
+			DrawText("LEVEL 3", 400, 400, 20, WHITE);
+			level_state = Level3;
+		}
+		break;
+	case Level3:
+		minY = -5;
+		maxY = -5;
+		minX = 0;
+		maxX = GetScreenWidth() - 50;
+		Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
+		Scale = GetRandomValue(1.2f, 1.5f);
+		damageS = 50.0f;
+		health = 200.0f;
+		if (Destroyed == 50)
+		{
+			DrawText("YOU WIN!!!", 400,400, 20, WHITE);
+			gameOver = true;
+		}
+		break;
+	default:
+		break;
+	}
+
 	for (unsigned int i = 0; i < extractor.size(); i++)
 	{
 		if (fps > 148)
 		{
-			int minY = -5;
-			int maxY = -5;
-			int minX = 0;
-			int maxX = GetScreenWidth() - 50;
-			Vector2 Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
-			float Scale = 1.5f;
-			float damageS = 20.0f;
-
-			if (Destroyed >= 15)
-			{
-				damageS = 50.0f;
-			}
-			else {
-				minY = -5;
-				maxY = -5;
-				minX = 0;
-				maxX = GetScreenWidth() - 50;
-				Position = { (float)GetRandomValue(minX, maxX), (float)GetRandomValue(minY, maxY) };
-				Scale = 1.5f;
-				damageS = 20.0f;
-			}
-			
-			
-
+		
 			if (extractor[i].spriteActive == false)
 			{
 				if (extractor[i].spriteScale == 0 && extractor[i].spritePosition.x == 0 && extractor[i].spritePosition.y == 0)
 				{
+					extractor[i].health = health;
 					extractor[i].damage = damageS;
 					extractor[i].spriteScale = Scale;
 					extractor[i].spritePosition = Position;
