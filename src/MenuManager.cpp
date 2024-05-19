@@ -10,7 +10,7 @@ int HighScore;
 Menu::Menu()
 {
 	Image imahe = LoadImage("Image/game_bg.png");
-	background = LoadTextureFromImage(imahe);
+	background = LoadTextureFromImage(imahe);	
 }
 
 Menu::~Menu()

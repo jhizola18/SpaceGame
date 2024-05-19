@@ -12,7 +12,9 @@ int main()
 	constexpr int width = 600;
 	constexpr int height = 800;
 
+	Audio audio = Audio{};
 	Window window{ width, height, 74, "SpaceGame" };
+	
 	
 	Menu menu = Menu();
 	Game game = Game();
@@ -28,7 +30,7 @@ int main()
 		switch (game_state)
 		{
 		case Start_Menu:
-
+			UpdateMusicStream(audio.soundMenu());
 			if (menu.MenuBtn())
 			{
 				game_state = Gameplay;
