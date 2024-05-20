@@ -2,13 +2,14 @@
 
 Audio::Audio()
 	:
-	menu(),
-	Gameplay(),
-	Dead(),
 	Explosion()
 {
-	
 	InitAudioDevice();
+	menu =  LoadMusicStream("Sounds/Menu.mp3");
+	Gameplay = LoadSound("Sounds/start.mp3");
+	Dead = LoadSound("Sounds/player_death.mp3");
+	timePlayed = 0.0f;
+
 }
 
 Audio::~Audio() noexcept
@@ -21,17 +22,21 @@ Audio::~Audio() noexcept
 
 Music Audio::soundMenu()
 {
-	menu = LoadMusicStream("Sounds/Menu.mp3");
-	if (!IsMusicReady(menu))
-	{
-		DrawText("Error Loading Music", 300, 200, 15, WHITE);
-	}
-	else {
-		PlayMusicStream(menu);
-
-		SetMusicVolume(menu, 0.1f);
-	}
-
+	PlayMusicStream(menu);
+	SetMusicVolume(menu, 0.3f);
+	
 	return menu;
 
+}
+
+void Audio::soundStart()
+{
+	PlaySound(Gameplay);
+	SetSoundVolume(Gameplay, 0.4f);
+}
+
+void Audio::soundGameOver()
+{
+	PlaySound(Dead);
+	SetSoundVolume(Dead, 0.3f);
 }

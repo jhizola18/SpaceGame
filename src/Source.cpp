@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "MenuManager.h"
 
-
 bool pause = false;
 Game_State game_state = Start_Menu;
 Game_State prev_state = game_state;
@@ -20,19 +19,21 @@ int main()
 	Game game = Game();
 	//Refactor the Switch Statement for pause play find a better solution
 	HideCursor();
-	
 	while (!window.gameShouldClose())
 	{
+		
 		BeginDrawing();
 		ClearBackground(BLACK);
 		menu.Background(0,0,WHITE);
 		menu.DrawCursor();
+		
 		switch (game_state)
 		{
 		case Start_Menu:
 			UpdateMusicStream(audio.soundMenu());
 			if (menu.MenuBtn())
 			{
+				audio.soundStart();
 				game_state = Gameplay;
 			};
 			if (menu.OptionBtn())
@@ -53,6 +54,7 @@ int main()
 			if (gameOver)
 			{
 				game.resetGame();
+				audio.soundGameOver();
 				game_state = GameOver;
 			}
 			menu.showScore();

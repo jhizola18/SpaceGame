@@ -8,9 +8,13 @@ private:
 	Sound Gameplay;
 	Sound Dead;
 	Sound Explosion;
+
+	float timePlayed;
 public:
 	Audio();
 	~Audio()noexcept;
 
 	Music soundMenu();
+	void soundStart();
+	void soundGameOver();
 };
