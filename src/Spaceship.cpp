@@ -70,7 +70,7 @@ Vector2 Player_Ship::rotatePos(Vector2 position, Vector2 origin, float angle_deg
 	float new_x = origin.x + dx * cos(angle_radians) - dy * sin(angle_radians);
 	float new_y = origin.y + dx * sin(angle_radians) + dy * cos(angle_radians);
 
-	Vector2 new_position;
+	Vector2 new_position{};
 	new_position.x = new_x;
 	new_position.y = new_y;
 

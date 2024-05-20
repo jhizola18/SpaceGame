@@ -9,8 +9,9 @@ private:
 	Player_Ship ship = Player_Ship();
 	EnemyManager enemy = EnemyManager();
 	collision_Check collision = collision_Check();
-	BulletManager bullet;
-	EnemyManager enemies;
+	BulletManager bullet = BulletManager();
+	EnemyManager enemies = EnemyManager();
+
 public:
 	Game();
 	~Game()noexcept;

@@ -1,10 +1,10 @@
 #include "Game.h"
 #include "enums.h"
 
+
 using namespace varHolder;
 
 int index = 0;
-
 
 Game::Game()
 	:

@@ -12,12 +12,12 @@ int main()
 	constexpr int height = 800;
 
 	Audio audio = Audio{};
+	
 	Window window{ width, height, 74, "SpaceGame" };
 	
 	
 	Menu menu = Menu();
 	Game game = Game();
-	//Refactor the Switch Statement for pause play find a better solution
 	HideCursor();
 	while (!window.gameShouldClose())
 	{
@@ -42,12 +42,18 @@ int main()
 			};
 			break;
 		case Gameplay:
+			UpdateMusicStream(audio.soundInGame());
 			game.userInput();
 			game.gameMechanics();
 			menu.Player_Score();
 			ClearBackground(BLACK);
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+			{
+				audio.soundShooting();
+			}
 			if (menu.PauseBtn())
 			{
+				audio.soundPause();
 				game_state = Pause;
 				pause = true;
 			};

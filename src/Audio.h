@@ -5,11 +5,13 @@
 class Audio {
 private:
 	Music menu;
+	Music In_Game;
 	Sound Gameplay;
 	Sound Dead;
-	Sound Explosion;
+	//Sound Explosion;
+	Sound Pause;
+	Sound Shooting;
 
-	float timePlayed;
 public:
 	Audio();
 	~Audio()noexcept;
@@ -17,4 +19,7 @@ public:
 	Music soundMenu();
 	void soundStart();
 	void soundGameOver();
+	void soundPause();
+	Music soundInGame();
+	void soundShooting();
 };
