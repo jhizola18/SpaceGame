@@ -6,16 +6,19 @@ bool pause = false;
 Game_State game_state = Start_Menu;
 Game_State prev_state = game_state;
 
+
+
+
 int main()
 {
 	constexpr int width = 600;
 	constexpr int height = 800;
 
-	Audio audio = Audio{};
-	
+	//Audio* audio = new Audio{};
+	Audio* audio = new Audio();
 	Window window{ width, height, 74, "SpaceGame" };
 	
-	
+	float bgm_vol = 0.3f;
 	Menu menu = Menu();
 	Game game = Game();
 	HideCursor();
@@ -30,46 +33,47 @@ int main()
 		switch (game_state)
 		{
 		case Start_Menu:
-			UpdateMusicStream(audio.soundMenu());
+			UpdateMusicStream(audio->soundMenu());
 			if (menu.MenuBtn())
 			{
-				audio.soundStart();
+				audio->soundStart();
 				game_state = Gameplay;
 			};
 			if (menu.OptionBtn())
 			{
+				audio->soundPause();
 				game_state = Option;
 			};
 			break;
 		case Gameplay:
-			UpdateMusicStream(audio.soundInGame());
+			UpdateMusicStream(audio->soundInGame());
 			game.userInput();
 			game.gameMechanics();
 			menu.Player_Score();
 			ClearBackground(BLACK);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
-				audio.soundShooting();
+				audio->soundShooting();
 			}
 			if (menu.PauseBtn())
 			{
-				audio.soundPause();
+				audio->soundPause();
 				game_state = Pause;
 				pause = true;
 			};
 			if (gameOver)
 			{
 				game.resetGame();
-				audio.soundGameOver();
+				audio->soundGameOver();
 				game_state = GameOver;
 			}
 			menu.showScore();
 			game.Draw();
 			break;
 		case Pause:
-			
 			if (menu.PlayBtn())
 			{
+				audio->soundPause();
 				pause = false;
 				game_state = Gameplay;
 			};
@@ -77,9 +81,12 @@ int main()
 			game.Draw();
 			break;
 		case Option:
-			
+			//fix the UI for Sound Settings
+			audio->soundLevel();
+			menu.soundSettings(audio->get_Vfx_vol(), audio->get_bgm_vol());
 			if (menu.BackBtn())
 			{
+				audio->soundPause();
 				game_state = prev_state;
 			};
 			
@@ -89,6 +96,7 @@ int main()
 			game.resetGame();
 			if (menu.Replay())
 			{
+				audio->soundPause();
 				game_state = Gameplay;
 				gameOver = false;
 				Destroyed = 0;
@@ -96,6 +104,7 @@ int main()
 			}
 			if (menu.MenuBackBtn())
 			{
+				audio->soundPause();
 				game_state = Start_Menu;
 				gameOver = false;
 				Destroyed = 0;
@@ -106,8 +115,11 @@ int main()
 		}
 
 		EndDrawing();
+		
+
 	}
-	
+	delete audio;
+	audio = NULL;
 
 	return 0;
 }

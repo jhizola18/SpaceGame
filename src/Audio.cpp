@@ -1,5 +1,6 @@
 #include "Audio.h"
-
+#include "raygui.h"
+#include <iostream>
 int fps_Sound = 0;
 
 Audio::Audio()
@@ -11,6 +12,8 @@ Audio::Audio()
 	In_Game = LoadMusicStream("Sounds/soundGameplay.mp3");
 	Pause = LoadSound("Sounds/soundPause.mp3");
 	Shooting = LoadSound("Sounds/soundShooting.mp3");
+	vfx_vol = 0.3f;
+	bgm_vol = 0.3f;
 }
 
 Audio::~Audio() noexcept
@@ -19,13 +22,12 @@ Audio::~Audio() noexcept
 	UnloadSound(Gameplay);
 	UnloadSound(Dead);
 	UnloadMusicStream(In_Game);
-
 }
 
 Music Audio::soundMenu()
 {
 	PlayMusicStream(menu);
-	SetMusicVolume(menu, 0.3f);
+	
 	
 	return menu;
 
@@ -34,19 +36,19 @@ Music Audio::soundMenu()
 void Audio::soundStart()
 {
 	PlaySound(Gameplay);
-	SetSoundVolume(Gameplay, 0.4f);
+	
 }
 
 void Audio::soundGameOver()
 {
 	PlaySound(Dead);
-	SetSoundVolume(Dead, 0.3f);
+	
 }
 
 void Audio::soundPause()
 {
 	PlaySound(Pause);
-	SetSoundVolume(Pause, 0.4f);
+	
 }
 
 Music Audio::soundInGame()
@@ -61,7 +63,7 @@ Music Audio::soundInGame()
 		fps_Sound = 0;
 	}
 	
-	SetMusicVolume(In_Game, 0.3f);
+	
 
 	return In_Game;
 }
@@ -69,5 +71,30 @@ Music Audio::soundInGame()
 void Audio::soundShooting()
 {
 	PlaySound(Shooting);
-	SetSoundVolume(Shooting, 0.3f);
+	
+}
+
+void Audio::soundLevel()
+{
+	SetMusicVolume(menu, bgm_vol);
+	SetMusicVolume(In_Game, bgm_vol);
+
+	SetSoundVolume(Gameplay, vfx_vol);
+	SetSoundVolume(Shooting, vfx_vol);
+	SetSoundVolume(Pause, vfx_vol);
+	SetSoundVolume(Dead, vfx_vol);
+	DrawText(TextFormat("Vfx Vol: %f", vfx_vol), 400, 400, 20, WHITE);
+
+}
+
+
+
+float& Audio::get_Vfx_vol()
+{
+	return vfx_vol;
+}
+
+float& Audio::get_bgm_vol()
+{
+	return bgm_vol;
 }

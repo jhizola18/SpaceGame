@@ -23,9 +23,10 @@ Game::~Game() noexcept
 
 void Game::resetGame()
 {
-	
+	ship.gravityReset();
 	enemy.resetFullEnemy();
 	ship.ResetShip();
+	bullet.resetAllBullet();
 }
 
 void Game::userInput()

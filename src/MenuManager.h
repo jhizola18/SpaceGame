@@ -24,5 +24,7 @@ public:
 	void Player_Score();
 	void showScore();
 
+	void soundSettings(float& vfx_vol, float& bgm_vol);
+
 	
 };

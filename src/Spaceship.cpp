@@ -360,6 +360,15 @@ void BulletManager::resetBullet(Bullet& getBullet)
 	
 }
 
+void BulletManager::resetAllBullet()
+{
+	for (int i = 0; i < extractor.size(); ++i)
+	{
+		extractor.pop_back();
+	}
+}
+
+
 
 void BulletManager::drawBullet()
 {
@@ -368,6 +377,7 @@ void BulletManager::drawBullet()
 		if (item.bulletAlive == true)
 		{
 			DrawRectangle((int)item.rec.x, (int)item.rec.y, (int)item.rec.width, (int)item.rec.height, item.color);
+			
 		}
 		else {
 			continue;

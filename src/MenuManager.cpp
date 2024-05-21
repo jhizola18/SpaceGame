@@ -145,5 +145,14 @@ void Menu::showScore()
 }
 
 
+void Menu::soundSettings(float& vfx_vol, float& bgm_vol)
+{
+	DrawText(TextFormat("Value Vol: %f", vfx_vol), 200, 200, 20, WHITE);
+	GuiSliderBar({ 300, 500, 120, 20 }, "Min", "Max", &vfx_vol, 0.0f, 0.8f);
+	DrawText(TextFormat("Value Vol: %f", bgm_vol), 200, 300, 20, WHITE);
+	GuiSliderBar({ 300, 700, 120, 20 }, "Min", "Max", &bgm_vol, 0.0f, 0.8f);
+}
+
+
 
 

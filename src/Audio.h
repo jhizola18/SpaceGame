@@ -11,6 +11,8 @@ private:
 	//Sound Explosion;
 	Sound Pause;
 	Sound Shooting;
+	float vfx_vol;
+	float bgm_vol;
 
 public:
 	Audio();
@@ -22,4 +24,9 @@ public:
 	void soundPause();
 	Music soundInGame();
 	void soundShooting();
+	//fix sound settings
+	void soundLevel();
+	float& get_Vfx_vol();
+	float& get_bgm_vol();
+
 };

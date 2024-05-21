@@ -31,6 +31,7 @@ public:
 
 	Bullet getBullet();
 	void resetBullet(Bullet& getBullet);
+	void resetAllBullet();
 	std::deque<Bullet> bullet_Pool(); 
 	std::deque<Bullet> extractor;
 	std::deque<Bullet> pool;
