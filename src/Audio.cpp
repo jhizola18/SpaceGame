@@ -1,11 +1,11 @@
 #include "Audio.h"
 #include "raygui.h"
 #include <iostream>
+
 int fps_Sound = 0;
 
 Audio::Audio()
 {
-	InitAudioDevice();
 	menu =  LoadMusicStream("Sounds/Menu.mp3");
 	Gameplay = LoadSound("Sounds/start.mp3");
 	Dead = LoadSound("Sounds/player_death.mp3");
@@ -27,7 +27,6 @@ Audio::~Audio() noexcept
 Music Audio::soundMenu()
 {
 	PlayMusicStream(menu);
-	
 	
 	return menu;
 

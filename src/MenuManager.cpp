@@ -12,7 +12,6 @@ Menu::Menu()
 {
 	Image imahe = LoadImage("Image/game_bg.png");
 	background = LoadTextureFromImage(imahe);	
-	colortype = 0;
 	colored = varHolder::ship_colors();
 }
 

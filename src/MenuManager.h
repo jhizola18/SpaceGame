@@ -2,16 +2,16 @@
 #include "raylib.h"
 #include "Spaceship.h"
 
+
 class Menu {
 private:
 	Player_Ship ship = Player_Ship();
 	Texture2D background;
 	std::vector<Color> colored;
-	int colortype;
+
 public:
 	Menu();
 	~Menu();
-
 
 	void DrawCursor();
 	void MainMenu();

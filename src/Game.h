@@ -2,6 +2,8 @@
 #include "Spaceship.h"
 #include "Enemy.h"
 #include "Collision.h"
+#include "MenuManager.h"
+#include "Audio.h"
 
 
 class Game {
@@ -11,6 +13,8 @@ private:
 	collision_Check collision = collision_Check();
 	BulletManager bullet = BulletManager();
 	EnemyManager enemies = EnemyManager();
+	Menu menu = Menu();
+	Audio* audio = new Audio();
 
 public:
 	Game();
@@ -20,6 +24,7 @@ public:
 	void userInput();
 	void Draw(int colortype);
 	void gameMechanics();
+	void MainGame();
 	int velocity;
 	float positionY;
 	float positionX;
