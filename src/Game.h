@@ -18,7 +18,7 @@ public:
 
 	void resetGame();
 	void userInput();
-	void Draw();
+	void Draw(int colortype);
 	void gameMechanics();
 	int velocity;
 	float positionY;

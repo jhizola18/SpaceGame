@@ -1,11 +1,13 @@
 #pragma once
 #include "raylib.h"
-
+#include "Spaceship.h"
 
 class Menu {
 private:
+	Player_Ship ship = Player_Ship();
 	Texture2D background;
-
+	std::vector<Color> colored;
+	int colortype;
 public:
 	Menu();
 	~Menu();
@@ -25,6 +27,8 @@ public:
 	void showScore();
 
 	void soundSettings(float& vfx_vol, float& bgm_vol);
+	int colorSettings(Player_Ship& ship);
+	void colorSettingsGUI(Player_Ship& ship);
 
-	
+
 };

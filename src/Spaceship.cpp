@@ -8,6 +8,7 @@
 using namespace varHolder;
 int magCount;
 
+
 Player_Ship::Player_Ship()
 	:
 	bullet()
@@ -21,11 +22,13 @@ Player_Ship::Player_Ship()
 	speed = 250.0f;
 	health = 100.0f;
 	position = {0.0f,0.0f};
+	ship_colors = 0;
+	coloreds = varHolder::ship_colors();
 }
 
 Player_Ship::~Player_Ship()
 {
-	std::cout << "OBJECT DESTROYED(SHIP)\n";
+
 }
 
 void Player_Ship::ResetShip()
@@ -59,23 +62,11 @@ Vector2 Player_Ship::getPointLeft() const
 	return point_Left;
 }
 
-
-Vector2 Player_Ship::rotatePos(Vector2 position, Vector2 origin, float angle_degrees)
+int& Player_Ship::getship_color()
 {
-	float angle_radians = angle_degrees * DEG2RAD;
-
-	float dx = position.x - origin.x;
-	float dy = position.y - origin.y;
-
-	float new_x = origin.x + dx * cos(angle_radians) - dy * sin(angle_radians);
-	float new_y = origin.y + dx * sin(angle_radians) + dy * cos(angle_radians);
-
-	Vector2 new_position{};
-	new_position.x = new_x;
-	new_position.y = new_y;
-
-	return new_position;
+	return ship_colors;
 }
+
 
 
 float& Player_Ship::getHealth()
@@ -84,69 +75,13 @@ float& Player_Ship::getHealth()
 }
 
 
-void Player_Ship::Draw()
+void Player_Ship::Draw(int colortype)
 {
-	DrawTriangle(point_Top, point_Left, point_Right, BLUE);
+
+	DrawTriangle(point_Top, point_Left, point_Right, coloreds[colortype]);
 }
 
-void Player_Ship::rotationShip(Vector2 Top, Vector2 Right, Vector2 Left)
-{
-	
-	//start Fresh
-	//find out why the top triangle keeps expanding
-	//find a solution to rotate the other two vectors relative to top and center vector
-	if (IsCursorOnScreen())
-	{
-		//It Worked
-		float cent_X = ((Top.x + Right.x + Left.x) / 3.0f);
-		float cent_Y = ((Top.y + Right.y + Left.y) / 3.0f);
-		Vector2 center = {cent_X, cent_Y};
-		
-		Vector2 Cent_to_Top = Vector2Subtract(Top, center);
-		Vector2 Top_to_Mouse = Vector2Subtract(varHolder::cursorPosition(), Top);
-		float angularS = 50.0f;
-		//Distance from Ship to Mouse
-		Vector2 Ship_to_Mouse = Vector2Subtract(Top, varHolder::cursorPosition());
 
-		float angleOrigin = Vector2Angle(varHolder::cursorPosition(), center) * DEG2RAD;
-
-		float angleTop_Right = Vector2Angle(Top, Right) * DEG2RAD;
-		float angleRight_Left = Vector2Angle(Right,Left) * DEG2RAD;
-		float angleLeft_Top = Vector2Angle(Left,Top) * DEG2RAD;
-		
-		float new_X = Top.x + Top_to_Mouse.x * cos(angleOrigin) - Top_to_Mouse.y * sin(angleOrigin);
-		float new_Y = Top.y + Top_to_Mouse.x * sin(angleOrigin) + Top_to_Mouse.y * cos(angleOrigin);
-		
-		Vector2 norm = Vector2Normalize(Top_to_Mouse);
-
-
-
-		//point_Top = {new_X,new_Y)};
-		if(IsKeyDown(KEY_E))
-		{
-			point_Top.x -= sin(angleOrigin) * angularS * GetFrameTime();
-			point_Top.y -=  -cos(angleOrigin) * angularS * GetFrameTime();
-		}
-		if (IsKeyDown(KEY_Q))
-		{
-			point_Top.x +=  sin(angleOrigin) * angularS * GetFrameTime();
-			point_Top.y += -cos(angleOrigin) * angularS * GetFrameTime();
-		}
-		
-	
-		
-		DrawText(TextFormat("angle coordinate: %f", angleOrigin * RAD2DEG), 250, 0, 20, WHITE);
-	}
-
-}
-//unused code but can be usable
-//Vector2 Ship_to_Mouse_Norm = Vector2Normalize(Ship_to_Mouse); 
-//Vector2 Mouse_to_Ship = Vector2Subtract(varHolder::cursorPosition(), point_Top);
-//float normalize = sqrt((Ship_to_Mouse.x * Ship_to_Mouse.x) + (Ship_to_Mouse.y * Ship_to_Mouse.y));
-//Vector2 Ship_to_Mouse = Vector2Subtract(varHolder::cursorPosition(), point_Top);
-//Vector2 Ship_to_Mouse = Vector2Subtract(varHolder::cursorPosition(), point_Top);
-//Vector2 magnitude = { Ship_to_Mouse.x/normalize, Ship_to_Mouse.y/normalize};
-//rotatePos(varHolder::cursorPosition(), center, angleOrigin);
 void Player_Ship::moveForward()
 {
 	float deltaF = GetFrameTime();
@@ -336,7 +271,7 @@ BulletManager::BulletManager()
 
 BulletManager::~BulletManager() noexcept
 {
-	for (int i = 0; i < pool.size();++i)
+	for (unsigned int i = 0; i < pool.size();++i)
 	{
 		pool.pop_back();
 	}
@@ -362,7 +297,7 @@ void BulletManager::resetBullet(Bullet& getBullet)
 
 void BulletManager::resetAllBullet()
 {
-	for (int i = 0; i < extractor.size(); ++i)
+	for (unsigned int i = 0; i < extractor.size(); ++i)
 	{
 		extractor.pop_back();
 	}

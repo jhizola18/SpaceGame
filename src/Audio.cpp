@@ -83,7 +83,7 @@ void Audio::soundLevel()
 	SetSoundVolume(Shooting, vfx_vol);
 	SetSoundVolume(Pause, vfx_vol);
 	SetSoundVolume(Dead, vfx_vol);
-	DrawText(TextFormat("Vfx Vol: %f", vfx_vol), 400, 400, 20, WHITE);
+
 
 }
 

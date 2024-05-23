@@ -2,6 +2,11 @@
 #include "Game.h"
 #include "MenuManager.h"
 
+
+#if defined(PLATFORM_WEB)
+	#include <emscripten/emscripten.h>
+#endif
+
 bool pause = false;
 Game_State game_state = Start_Menu;
 Game_State prev_state = game_state;
@@ -17,14 +22,13 @@ int main()
 	//Audio* audio = new Audio{};
 	Audio* audio = new Audio();
 	Window window{ width, height, 74, "SpaceGame" };
-	
-	float bgm_vol = 0.3f;
+	Player_Ship ship{};
+
 	Menu menu = Menu();
 	Game game = Game();
 	HideCursor();
 	while (!window.gameShouldClose())
 	{
-		
 		BeginDrawing();
 		ClearBackground(BLACK);
 		menu.Background(0,0,WHITE);
@@ -68,7 +72,7 @@ int main()
 				game_state = GameOver;
 			}
 			menu.showScore();
-			game.Draw();
+			game.Draw(menu.colorSettings(ship));
 			break;
 		case Pause:
 			if (menu.PlayBtn())
@@ -78,12 +82,15 @@ int main()
 				game_state = Gameplay;
 			};
 			menu.showScore();
-			game.Draw();
+			game.Draw(menu.colorSettings(ship));
 			break;
 		case Option:
-			//fix the UI for Sound Settings
+			
 			audio->soundLevel();
 			menu.soundSettings(audio->get_Vfx_vol(), audio->get_bgm_vol());
+			
+			menu.colorSettings(ship);
+			menu.colorSettingsGUI(ship);
 			if (menu.BackBtn())
 			{
 				audio->soundPause();

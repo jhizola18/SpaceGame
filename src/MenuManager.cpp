@@ -7,10 +7,13 @@
 
 int HighScore;
 
+
 Menu::Menu()
 {
 	Image imahe = LoadImage("Image/game_bg.png");
 	background = LoadTextureFromImage(imahe);	
+	colortype = 0;
+	colored = varHolder::ship_colors();
 }
 
 Menu::~Menu()
@@ -147,10 +150,51 @@ void Menu::showScore()
 
 void Menu::soundSettings(float& vfx_vol, float& bgm_vol)
 {
-	DrawText(TextFormat("Value Vol: %f", vfx_vol), 200, 200, 20, WHITE);
-	GuiSliderBar({ 300, 500, 120, 20 }, "Min", "Max", &vfx_vol, 0.0f, 0.8f);
-	DrawText(TextFormat("Value Vol: %f", bgm_vol), 200, 300, 20, WHITE);
-	GuiSliderBar({ 300, 700, 120, 20 }, "Min", "Max", &bgm_vol, 0.0f, 0.8f);
+	
+	DrawText("SOUND SETTINGS", 220, 200, 20, WHITE);
+
+	DrawText("Sound Effect: ", 120, 320, 20, WHITE);
+	GuiSliderBar({ 120, 350, 180, 20 }, "Min", "Max", &vfx_vol, 0.0f, 0.8f);
+	
+	DrawText("Background Music: ", 120, 420, 20, WHITE);
+	GuiSliderBar({ 120, 450, 180, 20 }, "Min", "Max", &bgm_vol, 0.0f, 0.8f);
+}
+
+int Menu::colorSettings(Player_Ship& ship)
+{
+	if (game_state == Option)
+	{
+
+		if (IsKeyPressed(KEY_Q))
+		{
+			ship.getship_color()--;
+			if (ship.getship_color() < 0)
+			{
+				ship.getship_color() = 0;
+			}
+		}
+		if (IsKeyPressed(KEY_E))
+		{
+			ship.getship_color()++;
+			if (ship.getship_color() > 4)
+			{
+				ship.getship_color() = 4;
+			}
+		}
+	}
+		
+	return ship.getship_color();
+	
+}
+
+void Menu::colorSettingsGUI(Player_Ship& ship)
+{
+	DrawText("SHIP COLOR", 220, 500, 20, WHITE);
+
+	DrawText("Ship Color: ", 120, 550, 20, WHITE);
+	DrawText("Q", 240, 630, 20, WHITE);
+	DrawTriangle({ 300, 620 }, { 280 , 650 }, { 320, 650 }, colored[ship.getship_color()]);
+	DrawText("E", 360, 630, 20, WHITE);
 }
 
 

@@ -21,15 +21,12 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 		//enemy to bullet and enemy to out of bounds collision
 		for (unsigned int j = 0; j < enemy_body.extractor.size(); ++j)
 		{
-			std::cout << " Bullet count-> " << i << " \nEnemy Count-> " << j << " \n";
 			if (bullet.extractor[i].rec.y > enemy_body.extractor[j].spritePosition.y && bullet.extractor[i].rec.y <= enemy_body.extractor[j].spritePosition.y + (spriteDimension * enemy_body.extractor[j].spriteScale) && bullet.extractor[i].rec.x > enemy_body.extractor[j].spritePosition.x  && bullet.extractor[i].rec.x + bullet.extractor[i].rec.width < enemy_body.extractor[j].spritePosition.x + (spriteDimension * enemy_body.extractor[j].spriteScale))
 			{
 				enemy_body.extractor[j].health -= bullet.extractor[i].damage; 
-				DrawText(TextFormat("Enemy_HEALTH: %f", enemy_body.extractor[j].health), 50, 50, 50, WHITE);
 				bullet.resetBullet(bullet.extractor[i]);
 				if (enemy_body.extractor[j].health <= 0.00f)
 				{
-					DrawText("Object Collided Bottom Part", 200, 500, 15, WHITE);
 					bullet.resetBullet(bullet.extractor[i]);
 					enemy_body.resetEnemy(enemy_body.extractor[j]);
 					Destroyed++;
@@ -37,20 +34,12 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 				
 			}
 			else {
-				if (enemy_body.extractor[j].spritePosition.y > GetScreenHeight())
-				{
-					DrawText(" Out of Bounds ", 200, 500, 15, WHITE);
-				}
 				if (bullet.extractor[i].rec.y + bullet.extractor[i].rec.width < -GetScreenHeight())
 				{
 					bullet.resetBullet(bullet.extractor[i]);
 				}
 			}
 		
-		}
-		if (enemy_body.extractor.empty())
-		{
-			DrawText(" Pool Exhausted ", 200, 500, 15, WHITE);
 		}
 
 		for (unsigned int i = 0; i < bullet.extractor.size(); ++i)
@@ -75,13 +64,10 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 		{
 			ship_body.getHealth() -= enemy_body.extractor[check].damage;
 			Destroyed--;
-			DrawText(TextFormat("Player Health: %f", ship_body.getHealth()), 50, 50, 50, WHITE);
 			enemy_body.resetEnemy(enemy_body.extractor[check]);
-			DrawText(" HIT ", 200, 500, 15, WHITE);
 			if (ship_body.getHealth() <= 0.0f)
 			{
 				gameOver = true;
-				DrawText("Player Dead ", 200, 500, 15, WHITE);
 				enemy_body.resetEnemy(enemy_body.extractor[check]);
 			}
 		}

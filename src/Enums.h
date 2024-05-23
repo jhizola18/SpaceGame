@@ -1,6 +1,7 @@
 #pragma once
 #include"raylib.h"
 #include "unordered_map"
+#include "Vector"
 
 extern int magCount;
 extern bool gameOver;
@@ -17,4 +18,5 @@ namespace varHolder
 	const int collisionOffset();
 	const int bulletOffset();
 	Vector2 cursorPosition();
+	std::vector<Color> ship_colors();
 };

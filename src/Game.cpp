@@ -90,11 +90,11 @@ void Game::userInput()
 	
 }
 
-void Game::Draw()
+void Game::Draw(int colortype)
 {
 	bullet.drawBullet();
 	enemy.Draw();
-	ship.Draw();
+	ship.Draw(colortype);
 }
 
 

@@ -32,4 +32,11 @@ Vector2 varHolder::cursorPosition()
 	return{GetMousePosition().x, GetMousePosition().y};
 }
 
+std::vector<Color> varHolder::ship_colors()
+{
+	return {BLUE, RED, YELLOW, GREEN, BROWN};
+}
+
+
+
 
