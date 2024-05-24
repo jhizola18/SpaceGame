@@ -8,6 +8,10 @@ private:
 	Player_Ship ship = Player_Ship();
 	Texture2D background;
 	std::vector<Color> colored;
+	Image title;
+	Texture2D titleAnim;
+	Vector2 PositionTitle;
+	float fontsize;
 
 public:
 	Menu();
@@ -25,6 +29,7 @@ public:
 	void Background(int posx, int posy, Color tint);
 	void Player_Score();
 	void showScore();
+	void healthbar(float posx, float posy,  float& health);
 
 	void soundSettings(float& vfx_vol, float& bgm_vol);
 	int colorSettings(Player_Ship& ship);

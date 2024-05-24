@@ -334,7 +334,6 @@ void BulletManager::updateBullet(float posX, float posY, Bullet getBullet)
 		getBullet.bulletSpeed = 5;
 		getBullet.color = WHITE;
 		extractor.push_back(getBullet);
-		std::cout << "updated\n";
 	}
 	
 }
@@ -364,15 +363,8 @@ BulletManager::Bullet BulletManager::getBullet()
 	pool.pop_back();
 	if (pool.empty())
 	{
-		std::cout << "EMPTY!!! ";
 		pool = bullet_Pool();
 	}
-
-	for (unsigned int i = 0; i < pool.size(); ++i)
-	{
-		std::cout << " content of the pool: " << i << " ";
-	}
-
 	return hold;
 	
 }
@@ -392,35 +384,8 @@ std::deque<BulletManager::Bullet> BulletManager::bullet_Pool()
 
 		Bullet bullet = Bullet(0,dmg,{rec},speed, alive, color);
 		returnStorage.push_back(bullet);
-		std::cout << " bullet stored ";
 	}
 	return returnStorage;
 }
 
-
-//Extra Codes
-/*float Top_distanceX = GetMouseX() - point_Top.x;
-	float Top_distanceY = GetMouseY() - point_Top.y;
-
-	float Right_distanceX = GetMouseX() - point_Right.x;
-	float Right_distanceY = GetMouseY() - point_Right.y;
-
-	float Left_distanceX = GetMouseX() - point_Left.x;
-	float Left_distanceY = GetMouseY() - point_Left.y;
-
-	/*	Vector2 top{Top_distanceX, Top_distanceY};
-	Vector2 right{Right_distanceX, Right_distanceY};
-	Vector2 left{Left_distanceX, Left_distanceY};
-
-
-	float normalizeT = sqrt(pow(Top_distanceX, 2) + pow(Top_distanceY, 2));
-	float normalizeR = sqrt(pow(Right_distanceX, 2) + pow(Right_distanceY, 2));
-	float normalizeL = sqrt(pow(Left_distanceX, 2) + pow(Left_distanceY, 2));
-
-	point_Top.x = tan(Top_distanceX / normalizeT);
-	point_Top.y = tan(Top_distanceY / normalizeT);
-	point_Left.x = tan(Left_distanceX / normalizeL);
-	point_Left.y = tan(Left_distanceY / normalizeL);
-	point_Right.x = tan(Right_distanceX / normalizeR);
-	point_Right.y = tan(Right_distanceY / normalizeR); */
 

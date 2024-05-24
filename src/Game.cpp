@@ -138,6 +138,7 @@ void Game::MainGame()
 		userInput();
 		gameMechanics();
 		menu.Player_Score();
+		menu.healthbar(ship.getPointLeft().x, ship.getPointLeft().y, ship.getHealth());
 		ClearBackground(BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{

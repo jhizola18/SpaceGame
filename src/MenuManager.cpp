@@ -8,21 +8,30 @@
 int HighScore;
 
 
+
 Menu::Menu()
 {
 	Image imahe = LoadImage("Image/game_bg.png");
-	background = LoadTextureFromImage(imahe);	
+	background = LoadTextureFromImage(imahe);
+	title = LoadImage("Image/PEW_PEW_GAME.gif");
+	titleAnim = LoadTextureFromImage(title);
 	colored = varHolder::ship_colors();
+	PositionTitle = { 80.0, 200.0 };
+	fontsize = 0.5f;
 }
 
 Menu::~Menu()
 {
 	UnloadTexture(background);
+	UnloadImage(title);
+	UnloadTexture(titleAnim);
 }
 
 void Menu::MainMenu()
 {
 	GuiPanel({0,0,(float)GetScreenWidth(), (float)GetScreenHeight()},"Sample");
+	
+	
 }
 
 void Menu::DrawCursor()
@@ -32,7 +41,9 @@ void Menu::DrawCursor()
 
 bool Menu::MenuBtn()
 {
-	if (GuiButton({ (float)GetScreenWidth() / 3, (float)GetScreenHeight() / 3, 200.0f,50.0f },GuiIconText(ICON_PLAYER_PLAY,"Start")))
+	DrawTextureEx(titleAnim, PositionTitle, 0.0f, fontsize, LIGHTGRAY);
+	
+	if (GuiButton({ (float)GetScreenWidth() / 3, (float)GetScreenHeight() / 2, 200.0f,50.0f },GuiIconText(ICON_PLAYER_PLAY,"Start")))
 	{
 		return true;
 	}
@@ -44,7 +55,7 @@ bool Menu::MenuBtn()
 
 bool Menu::OptionBtn()
 {
-	if (GuiButton({ (float)GetScreenWidth() / 3, (float)GetScreenHeight() / 2, 200.0f,50.0f }, GuiIconText(ICON_GEAR, "Option")))
+	if (GuiButton({ (float)GetScreenWidth() / 3, ((float)GetScreenHeight() / 2) + 100, 200.0f,50.0f}, GuiIconText(ICON_GEAR, "Option")))
 	{
 		return true;
 	}
@@ -144,6 +155,11 @@ void Menu::showScore()
 	};
 	DrawText(TextFormat("Score: %i", Destroyed), 50, 750, 15, WHITE);
 	DrawText(TextFormat("High-Score: %i", HighScore), 50, 700, 15, WHITE);
+}
+
+void Menu::healthbar(float posx, float posy,float& health)
+{
+	GuiProgressBar({posx - 15, posy + 10 ,70, 10}, NULL, NULL, &health, 0.0f, 100.0f);
 }
 
 

@@ -72,6 +72,6 @@ void collision_Check::check_collision(EnemyManager& enemy_body, BulletManager& b
 			}
 		}
 	}
-	DrawText(TextFormat("Health: %f", ship_body.getHealth()),new_X, new_Y, 20 ,WHITE);
+	
 }
 		

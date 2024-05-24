@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "Game.h"
-#include "emscripten.h"
+
 
 
 
@@ -15,9 +15,7 @@ int main()
 	Game game = Game();
 
 
-#if defined(PLATFORM_WEB)
-	emscripten_set_main_loop(Game.MainGame(), 60, 1);
-#else
+
 	
 	HideCursor();
 	while (!window.gameShouldClose())
@@ -28,7 +26,7 @@ int main()
 		EndDrawing();
 	}
 
-#endif
+
 	return 0;
 
 
