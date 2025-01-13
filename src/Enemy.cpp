@@ -94,10 +94,7 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 	{
 		extractor = getEnemy();
 	}
-	if (handlers.empty())
-	{
-		std::cout << " Empty pool ";
-	}
+	
 
 	int minY = -5;
 	int maxY = -5;
@@ -121,7 +118,6 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 		health = 100;
 		if (Destroyed == 15)
 		{
-			DrawText("LEVEL 2", 400, 400, 20, WHITE);
 			level_state = Level2;
 		}
 		break;
@@ -136,7 +132,6 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 		health = 150.0f;
 		if (Destroyed == 30)
 		{
-			DrawText("LEVEL 3", 400, 400, 20, WHITE);
 			level_state = Level3;
 		}
 		break;
@@ -151,7 +146,6 @@ void EnemyManager::enemyUpdate(Player_Ship& getShip)
 		health = 200.0f;
 		if (Destroyed == 50)
 		{
-			DrawText("YOU WIN!!!", 400,400, 20, WHITE);
 			gameOver = true;
 		}
 		break;

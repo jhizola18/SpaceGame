@@ -13,6 +13,7 @@ Player_Ship::Player_Ship()
 	:
 	bullet()
 {
+	ShipTexture = LoadTexture("Image/ship_red.png");
 	point_Top = { 300, 720 };
 	point_Left = { 280 , 750 };
 	point_Right = { 320, 750 };
@@ -28,7 +29,7 @@ Player_Ship::Player_Ship()
 
 Player_Ship::~Player_Ship()
 {
-
+	UnloadTexture(ShipTexture);
 }
 
 void Player_Ship::ResetShip()
@@ -42,7 +43,6 @@ void Player_Ship::ResetShip()
 	speed = 250.0f;
 	health = 100.0f;
 	position = { 0.0f,0.0f };
-	
 }
 
 
@@ -77,8 +77,13 @@ float& Player_Ship::getHealth()
 
 void Player_Ship::Draw(int colortype)
 {
+	float new_X = ((point_Top.x + point_Right.x + point_Left.x)/3.0f);
+	float new_Y = ((point_Top.y + point_Right.y + point_Left.y)/3.0f);
 
-	DrawTriangle(point_Top, point_Left, point_Right, coloreds[colortype]);
+	Vector2 centroid = {new_X - 25.0f, new_Y - 35.0f};
+	//DrawTriangle(point_Top, point_Left, point_Right, coloreds[colortype]);
+
+	DrawTextureEx(ShipTexture, centroid, 0.0f, 1.0f, WHITE);
 }
 
 

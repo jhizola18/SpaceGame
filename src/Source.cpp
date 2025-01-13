@@ -11,7 +11,7 @@ int main()
 
 	InitAudioDevice();
 
-	Window window{ width, height, 74, "SpaceGame" };
+	Window window{ width, height, 74, "PEW PEW GAME" };
 	Game game = Game();
 
 

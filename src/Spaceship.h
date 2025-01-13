@@ -7,6 +7,8 @@
 
 class Player_Ship {
 private:
+	Texture2D ShipTexture;
+
 	Vector2 point_Top;
 	Vector2 point_Left;
 	Vector2 point_Right;

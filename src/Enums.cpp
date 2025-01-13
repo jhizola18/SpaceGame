@@ -34,7 +34,7 @@ Vector2 varHolder::cursorPosition()
 
 std::vector<Color> varHolder::ship_colors()
 {
-	return {BLUE, RED, YELLOW, GREEN, BROWN};
+	return {BLUE, RED, YELLOW, GREEN, BROWN, PINK};
 }
 
 

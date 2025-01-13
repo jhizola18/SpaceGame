@@ -159,7 +159,7 @@ void Menu::showScore()
 
 void Menu::healthbar(float posx, float posy,float& health)
 {
-	GuiProgressBar({posx - 15, posy + 10 ,70, 10}, NULL, NULL, &health, 0.0f, 100.0f);
+	GuiProgressBar({ posx - 11.5f, posy + 10.0f ,70.0f, 10.0f }, NULL, NULL, & health, 0.0f, 100.0f);
 }
 
 
@@ -191,9 +191,9 @@ int Menu::colorSettings(Player_Ship& ship)
 		if (IsKeyPressed(KEY_E))
 		{
 			ship.getship_color()++;
-			if (ship.getship_color() > 4)
+			if (ship.getship_color() > 5)
 			{
-				ship.getship_color() = 4;
+				ship.getship_color() = 5;
 			}
 		}
 	}
