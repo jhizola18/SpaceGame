@@ -15,7 +15,7 @@ Menu::Menu()
 	background = LoadTextureFromImage(imahe);
 	title = LoadImage("Image/PEW_PEW_GAME.gif");
 	titleAnim = LoadTextureFromImage(title);
-	colored = varHolder::ship_colors();
+	colored = varHolder::ship_Colors();
 	PositionTitle = { 80.0, 200.0 };
 	fontsize = 0.5f;
 }
@@ -208,7 +208,11 @@ void Menu::colorSettingsGUI(Player_Ship& ship)
 
 	DrawText("Ship Color: ", 120, 550, 20, WHITE);
 	DrawText("Q", 240, 630, 20, WHITE);
-	DrawTriangle({ 300, 620 }, { 280 , 650 }, { 320, 650 }, colored[ship.getship_color()]);
+	float newX = ((300.0f + 280.0f + 320.0f)/3.0f);
+	float newY = ((620.0f + 650.0f + 650.0f) / 3.0f);
+	Vector2 centroid = {newX - 20.0f, newY - 25.0f};
+	DrawTextureEx(LoadTexture(colored[ship.getship_color()]), centroid, 0.0f, 1.0f, WHITE);
+	//DrawTriangle({ 300, 620 }, { 280 , 650 }, { 320, 650 }, colored[ship.getship_color()]);
 	DrawText("E", 360, 630, 20, WHITE);
 }
 

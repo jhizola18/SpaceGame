@@ -37,6 +37,12 @@ std::vector<Color> varHolder::ship_colors()
 	return {BLUE, RED, YELLOW, GREEN, BROWN, PINK};
 }
 
+//Draw a ship for the remaining colors
+std::vector<const char*> varHolder::ship_Colors()
+{
+	return {"Image/ship_blue.png","Image/ship_red.png","Image/ship_yellow.png","Image/ship_green.png", "Image/ship_brown.png", "Image/ship_pink.png" };
+}
+
 
 
 

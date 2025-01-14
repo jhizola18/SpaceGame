@@ -7,7 +7,7 @@ class Menu {
 private:
 	Player_Ship ship = Player_Ship();
 	Texture2D background;
-	std::vector<Color> colored;
+	std::vector<const char*> colored;
 	Image title;
 	Texture2D titleAnim;
 	Vector2 PositionTitle;

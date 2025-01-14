@@ -10,6 +10,7 @@ extern enum Level_State {Level1, Level2, Level3}level_state;
 extern bool pause;
 extern int Destroyed;
 extern int HighScore;
+
 namespace varHolder
 {
 	const int clipSize();
@@ -19,4 +20,5 @@ namespace varHolder
 	const int bulletOffset();
 	Vector2 cursorPosition();
 	std::vector<Color> ship_colors();
+	std::vector<const char*> ship_Colors();
 };

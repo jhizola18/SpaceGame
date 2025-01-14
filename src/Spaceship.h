@@ -19,7 +19,7 @@ private:
 	Vector2 position;
 	float health;
 	int ship_colors;
-	std::vector<Color> coloreds;
+	std::vector<const char*> coloreds;
 	
 public:
 	
@@ -34,6 +34,7 @@ public:
 	float& getHealth();
 	
 	Player_Ship();
+	Player_Ship(const char* shipColor);
 	~Player_Ship();
 	void ResetShip();
 

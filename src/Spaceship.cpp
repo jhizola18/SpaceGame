@@ -13,10 +13,11 @@ Player_Ship::Player_Ship()
 	:
 	bullet()
 {
+	//create a vector of string to pull the desired color of the player;
 	ShipTexture = LoadTexture("Image/ship_red.png");
-	point_Top = { 300, 720 };
-	point_Left = { 280 , 750 };
-	point_Right = { 320, 750 };
+	point_Top = { 300.0f, 720.0f };
+	point_Left = { 280.0f , 750.0f };
+	point_Right = { 320.0f, 750.0f };
 	vertices = { point_Top, point_Left, point_Right};
 	gravity_Y = 9.08f;
 	gravity_X = 0.0f;
@@ -24,7 +25,24 @@ Player_Ship::Player_Ship()
 	health = 100.0f;
 	position = {0.0f,0.0f};
 	ship_colors = 0;
-	coloreds = varHolder::ship_colors();
+	coloreds = varHolder::ship_Colors();
+}
+
+Player_Ship::Player_Ship(const char* shipColor)
+{
+	this->ShipTexture = LoadTexture(shipColor);
+	this->point_Top = {300.0f,720.0f};
+	this->point_Left = {280.0f, 750.0f};
+	this->point_Right = {320.0f, 750.0f};
+	this->vertices = { point_Top, point_Left, point_Right };
+	this->gravity_Y = 9.08f;
+	this->gravity_X = 0.0f;
+	this->speed = 250.0f;
+	this->health = 100.0f;
+	this->position = {0.0f, 0.0f};
+	this->ship_colors = 0;
+	this->coloreds = varHolder::ship_Colors();
+
 }
 
 Player_Ship::~Player_Ship()
@@ -82,8 +100,8 @@ void Player_Ship::Draw(int colortype)
 
 	Vector2 centroid = {new_X - 25.0f, new_Y - 35.0f};
 	//DrawTriangle(point_Top, point_Left, point_Right, coloreds[colortype]);
-
-	DrawTextureEx(ShipTexture, centroid, 0.0f, 1.0f, WHITE);
+	Texture2D currentTexture = LoadTexture(coloreds[colortype]);
+	DrawTextureEx(currentTexture, centroid, 0.0f, 1.0f, WHITE);
 }
 
 
