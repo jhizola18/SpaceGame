@@ -19,6 +19,5 @@ namespace varHolder
 	const int collisionOffset();
 	const int bulletOffset();
 	Vector2 cursorPosition();
-	std::vector<Color> ship_colors();
 	std::vector<const char*> ship_Colors();
 };

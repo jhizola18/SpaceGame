@@ -99,7 +99,7 @@ void Player_Ship::Draw(int colortype)
 	float new_Y = ((point_Top.y + point_Right.y + point_Left.y)/3.0f);
 
 	Vector2 centroid = {new_X - 25.0f, new_Y - 35.0f};
-	//DrawTriangle(point_Top, point_Left, point_Right, coloreds[colortype]);
+	
 	Texture2D currentTexture = LoadTexture(coloreds[colortype]);
 	DrawTextureEx(currentTexture, centroid, 0.0f, 1.0f, WHITE);
 }
